@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<!--
+ ___ __ __   ________   ______   ______        _______   __  __     ________   __  __   ________   ______    ________       
+/__//_//_/\ /_______/\ /_____/\ /_____/\     /_______/\ /_/\/_/\   /_______/\ /_/\/_/\ /_______/\ /_____/\  /_______/\      
+\::\| \| \ \\::: _  \ \\:::_ \ \\::::_\/_    \::: _  \ \\ \ \ \ \  \::: _  \ \\:\ \:\ \\::: _  \ \\:::_ \ \ \::: _  \ \     
+ \:.      \ \\::(_)  \ \\:\ \ \ \\:\/___/\    \::(_)  \/_\:\_\ \ \  \::(_)  \ \\:\ \:\ \\::(_)  \ \\:\ \ \ \_\::(_)  \ \    
+  \:.\-/\  \ \\:: __  \ \\:\ \ \ \\::___\/_    \::  _  \ \\::::_\/   \:: __  \ \\:\ \:\ \\:: __  \ \\:\ \ /_ \\:: __  \ \   
+   \. \  \  \ \\:.\ \  \ \\:\/.:| |\:\____/\    \::(_)  \ \ \::\ \    \:.\ \  \ \\:\_\:\ \\:.\ \  \ \\:\_-  \ \\:.\ \  \ \  
+    \__\/ \__\/ \__\/\__\/ \____/_/ \_____\/     \_______\/  \__\/     \__\/\__\/ \_____\/ \__\/\__\/ \___|\_\_/\__\/\__\/  
+                                                                                                                            
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auaqa Typer - WPM Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-gradient-start: #002B36;
+            --bg-gradient-end: #004D40;
+            --card-bg: rgba(0, 51, 61, 0.75);
+            --card-border: rgba(0, 150, 136, 0.5);
+            --primary-text: #E0F2F1;
+            --highlight-text: #FFFFFF;
+            --dim-text: #80CBC4;
+            --caret-color: #64FFDA;
+            --error-text: #FFAB91;
+            --error-underline: #FF8A65;
+            --button-bg: rgba(0, 150, 136, 0.3);
+            --button-border: #009688;
+            --button-hover-bg: #009688;
+            --graph-line: #64FFDA;
+            --graph-fill: rgba(100, 255, 218, 0.2);
+            --font-main: 'Poppins', sans-serif;
+            --font-mono: 'Roboto Mono', monospace;
+        }
+        .theme-dusk {
+            --bg-gradient-start: #232526;
+            --bg-gradient-end: #414345;
+            --card-bg: rgba(45, 48, 51, 0.75);
+            --card-border: rgba(189, 189, 189, 0.5);
+            --primary-text: #E0E0E0;
+            --highlight-text: #FFFFFF;
+            --dim-text: #BDBDBD;
+            --caret-color: #FDD835;
+            --error-text: #EF9A9A;
+            --error-underline: #E57373;
+            --button-bg: rgba(117, 117, 117, 0.3);
+            --button-border: #9E9E9E;
+            --button-hover-bg: #9E9E9E;
+            --graph-line: #FDD835;
+            --graph-fill: rgba(253, 216, 53, 0.2);
+        }
+        .theme-crimson {
+            --bg-gradient-start: #3E0000;
+            --bg-gradient-end: #6B0000;
+            --card-bg: rgba(69, 4, 4, 0.75);
+            --card-border: rgba(239, 83, 80, 0.5);
+            --primary-text: #FFCDD2;
+            --highlight-text: #FFFFFF;
+            --dim-text: #E57373;
+            --caret-color: #FF8A80;
+            --error-text: #FFFF8D;
+            --error-underline: #FBC02D;
+            --button-bg: rgba(229, 115, 115, 0.3);
+            --button-border: #EF5350;
+            --button-hover-bg: #EF5350;
+            --graph-line: #FF8A80;
+            --graph-fill: rgba(255, 138, 128, 0.2);
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--primary-text);
+            background-color: var(--bg-gradient-start);
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+        #background-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            transition: background 0.5s ease;
+        }
+        .aqua-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            z-index: 1;
+            transition: all 0.5s ease;
+        }
+        #words-container {
+            overflow: hidden; user-select: none;
+            transition: filter 0.3s ease, transform 0.4s ease-in-out;
+            filter: blur(4px);
+            font-family: var(--font-mono);
+        }
+        #words-container.focused, #words-container:hover { filter: blur(0px); }
+        .letter { color: var(--dim-text); transition: color 0.2s ease, text-shadow 0.2s ease; }
+        .letter.correct { color: var(--highlight-text); text-shadow: 0 0 8px var(--caret-color); }
+        .letter.incorrect { color: var(--error-text); text-decoration: underline; text-decoration-color: var(--error-underline); }
+        #caret {
+            width: 3px; background-color: var(--caret-color); box-shadow: 0 0 10px var(--caret-color);
+            animation: blink 1s infinite; position: absolute;
+            transition: all 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94); border-radius: 3px;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .btn-aqua {
+            background-color: var(--button-bg); border: 1px solid var(--button-border); color: var(--primary-text);
+            transition: all 0.3s ease;
+        }
+        .btn-aqua:hover:not(:disabled) { background-color: var(--button-hover-bg); color: white; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .btn-aqua:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-aqua.active { background-color: var(--button-hover-bg); color: white; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); }
+        #results-screen { animation: fadeIn 0.5s ease-out; z-index: 10; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        #countdown-overlay { z-index: 20; }
+        @keyframes countdown { from { transform: scale(1.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        #stats-display {
+            transition: opacity 0.4s ease-in-out, max-height 0.4s ease-in-out, margin 0.4s ease-in-out, padding 0.4s ease-in-out;
+            max-height: 200px;
+        }
+        .zen-mode-active #stats-display {
+            opacity: 0;
+            max-height: 0;
+            margin-bottom: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            overflow: hidden;
+        }
+        .zen-mode-active #words-container {
+            transform: translateY(-20px);
+        }
+        
+        #settings-modal { z-index: 50; }
+        .modal-content { animation: fadeIn 0.3s ease-out; }
+
+        #easter-egg { animation: glow 2s infinite alternate; }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--caret-color), 0 0 40px var(--caret-color); }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px var(--dim-text), 0 0 40px var(--dim-text), 0 0 50px var(--dim-text); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-2 sm:p-4 transition-all duration-300">
+    <canvas id="background-canvas"></canvas>
+
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="modal-content aqua-card w-full max-w-md p-6 rounded-2xl relative">
+            <button id="close-settings-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>
+            </button>
+            <h2 class="text-2xl font-bold text-center mb-6" style="color: var(--highlight-text);">Settings</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="font-semibold mb-2" style="color: var(--dim-text);">Theme</h3>
+                    <div id="theme-selector" class="flex flex-wrap gap-2">
+                        <button class="btn-aqua flex-1 py-2 rounded-md text-sm active" data-theme="aqua">Aqua</button>
+                        <button class="btn-aqua flex-1 py-2 rounded-md text-sm" data-theme="dusk">Dusk</button>
+                        <button class="btn-aqua flex-1 py-2 rounded-md text-sm" data-theme="crimson">Crimson</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="aqua-card w-full max-w-6xl p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg relative">
+        <button id="open-settings-btn" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311a1.464 1.464 0 0 1-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c-1.4-.413-1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/></svg>
+        </button>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 tracking-wider" style="color: var(--highlight-text); text-shadow: 0 0 10px var(--caret-color);">Auaqa Typer</h1>
+        
+        <div id="settings" class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 mb-6">
+             <div id="difficulty-selector" class="flex items-center space-x-2">
+                <span class="text-sm" style="color: var(--dim-text);">Difficulty:</span>
+                <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-difficulty="easy">Easy</button>
+                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-difficulty="medium">Medium</button>
+                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-difficulty="hard">Hard</button>
+            </div>
+            <div id="time-selector" class="flex items-center space-x-2">
+                <span class="text-sm" style="color: var(--dim-text);">Time:</span>
+                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="15">15s</button>
+                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="30">30s</button>
+                <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-time="60">60s</button>
+                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="120">120s</button>
+            </div>
+             <div id="mode-selector" class="flex items-center space-x-2">
+                <span class="text-sm" style="color: var(--dim-text);">Mode:</span>
+                <button id="zen-mode-btn" class="btn-aqua px-3 py-1 rounded-md text-sm flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-peace" viewBox="0 0 16 16"><path d="M14 13.292A8 8 0 0 0 8.5.015v7.778l5.5 5.5zm-1.21 1.21a8 8 0 0 1-11.58 0l5.5-5.5 6.08 6.08zM8.5 16a8 8 0 0 1-5.292-14L8.5 7.222v8.778z"/></svg>
+                    Zen
+                </button>
+            </div>
+        </div>
+
+        <div id="test-area" class="relative">
+             <div id="countdown-overlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm flex-col justify-center items-center text-center p-8 rounded-lg hidden">
+                <h2 id="countdown-timer" class="text-8xl font-bold text-white">3</h2>
+            </div>
+             <div id="pause-overlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm flex-col justify-center items-center text-center p-8 rounded-lg hidden z-10">
+                <h2 class="text-4xl font-bold text-yellow-300 animate-pulse">Paused</h2>
+                <p class="text-gray-300 mt-2">Press any key to resume</p>
+            </div>
+            <div id="results-screen" class="absolute inset-0 bg-black/70 backdrop-blur-sm flex-col justify-center items-center text-center p-4 sm:p-8 rounded-lg hidden">
+                <h2 class="text-3xl font-bold mb-2" style="color: var(--highlight-text);">Results</h2>
+                <div id="easter-egg" class="hidden font-bold mb-2">SECRET WPM ACHIEVED!</div>
+                <div class="flex flex-wrap justify-around w-full max-w-2xl my-4">
+                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">WPM</p><p id="results-wpm" class="text-4xl sm:text-5xl font-bold" style="color: var(--highlight-text);">0</p></div>
+                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">Accuracy</p><p id="results-accuracy" class="text-4xl sm:text-5xl font-bold" style="color: var(--highlight-text);">0%</p></div>
+                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">High Score</p><p id="results-highscore" class="text-4xl sm:text-5xl font-bold text-yellow-300">0</p></div>
+                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">Raw WPM</p><p id="results-raw-wpm" class="text-4xl sm:text-5xl font-bold" style="color: var(--highlight-text);">0</p></div>
+                </div>
+                 <p id="results-details" class="text-gray-400 mb-4">Chars: 0 (Correct: 0 | Incorrect: 0)</p>
+                 <div class="w-full max-w-xl h-48 sm:h-64 mb-4"><canvas id="results-chart"></canvas></div>
+                <button id="restart-button" class="btn-aqua px-10 py-3 rounded-lg text-xl font-bold">Try Again</button>
+            </div>
+            <div id="stats-display" class="flex justify-between items-center text-center bg-black/20 p-2 sm:p-4 rounded-lg mb-4 sm:mb-6 border" style="border-color: var(--button-border);">
+                <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">WPM</h3><p id="wpm-display" class="text-3xl sm:text-4xl font-bold transition-all" style="color: var(--highlight-text);">0</p></div>
+                <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">Time</h3><p id="time-display" class="text-3xl sm:text-4xl font-bold" style="color: var(--highlight-text);">60</p></div>
+                <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">Accuracy</h3><p id="accuracy-display" class="text-3xl sm:text-4xl font-bold transition-all" style="color: var(--highlight-text);">100%</p></div>
+            </div>
+            <div id="words-container" class="relative bg-black/30 p-4 rounded-lg cursor-text h-36 sm:h-40 md:h-44 lg:h-48 text-xl sm:text-2xl" tabindex="0">
+                 <div id="caret"></div>
+                 <div id="word-display" class="leading-relaxed"></div>
+            </div>
+            <p class="text-center text-sm text-gray-500 mt-4">Click the text box or start typing to begin.</p>
+        </div>
+    </div>
+
+    <script>
+        const wordDisplay = document.getElementById('word-display');
+        const wordsContainer = document.getElementById('words-container');
+        const timeDisplay = document.getElementById('time-display');
+        const wpmDisplay = document.getElementById('wpm-display');
+        const accuracyDisplay = document.getElementById('accuracy-display');
+        const restartButton = document.getElementById('restart-button');
+        const settings = document.getElementById('settings');
+        const resultsScreen = document.getElementById('results-screen');
+        const resultsWpm = document.getElementById('results-wpm');
+        const resultsAccuracy = document.getElementById('results-accuracy');
+        const resultsDetails = document.getElementById('results-details');
+        const resultsHighscore = document.getElementById('results-highscore');
+        const resultsRawWpm = document.getElementById('results-raw-wpm');
+        const caret = document.getElementById('caret');
+        const pauseOverlay = document.getElementById('pause-overlay');
+        const countdownOverlay = document.getElementById('countdown-overlay');
+        const countdownTimer = document.getElementById('countdown-timer');
+        const resultsChartCanvas = document.getElementById('results-chart');
+        const zenModeBtn = document.getElementById('zen-mode-btn');
+        const easterEgg = document.getElementById('easter-egg');
+        const bgCanvas = document.getElementById('background-canvas');
+        const settingsModal = document.getElementById('settings-modal');
+        const openSettingsBtn = document.getElementById('open-settings-btn');
+        const closeSettingsBtn = document.getElementById('close-settings-btn');
+        const themeSelector = document.getElementById('theme-selector');
+
+        const commonWords=['the','be','to','of','and','a','in','that','have','I','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us'];
+        const mediumWords=['ability','about','above','accept','according','account','across','action','activity','actually','address','admin','admit','adult','affect','after','again','against','agency','agent','agree','ahead','allow','almost','alone','along','already','also','although','always','amazing','among','amount','analysis','animal','another','answer','anyone','anything','appear','apply','approach','area','argue','around','arrive','article','artist','assume','attack','attend','author','available','avoid','away','baby','back','balance','ball'];
+        const hardWords=['interface,','protocol.','algorithm,','network.','database,','javascript.','python,','firewall.','encryption,','cybernetics.','nanotechnology,','bandwidth.','framework,','compiler.','debugger,','kernel.','malware,','phishing.','server,','client.','binary,','hexadecimal.','virtualization,','cloud.','container,','kubernetes.','agile,','scrum.','waterfall,','backend.','frontend,','fullstack,','devops.','repository,','github.','gitlab,','bitbucket.','lambda,','function.','variable,','constant.','object,','class.','inheritance,','polymorphism.','encapsulation,'];
+        let words = [];
+
+        let time, gameDuration = 60;
+        let gameState = 'waiting';
+        let timeInterval, inactivityTimer, startTime;
+        let difficulty = 'easy';
+        let wordIndex = 0, letterIndex = 0;
+        let correctChars = 0, incorrectChars = 0, totalChars = 0, rawChars = 0;
+        let wpmHistory = [];
+        let resultsChart = null;
+        let isZenMode = false;
+
+        let audioReady = false;
+        const errorSynth = new Tone.MembraneSynth().toDestination();
+        let correctSoundPlayer;
+
+        document.addEventListener('keydown', handleKeyPress);
+        restartButton.addEventListener('click', () => resetTest(true));
+        settings.addEventListener('click', handleSettingsChange);
+        wordsContainer.addEventListener('click', () => { if (gameState === 'waiting') startCountdown(); });
+        zenModeBtn.addEventListener('click', () => toggleZenMode());
+        openSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
+        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
+        themeSelector.addEventListener('click', handleThemeChange);
+
+        function initAudio() {
+            if (audioReady) return;
+            Tone.start().then(() => {
+                correctSoundPlayer = new Tone.Player("https://tonejs.github.io/audio/berklee/harpsichord_A3.mp3").toDestination();
+                audioReady = true;
+            });
+        }
+
+        const correctKeySound = () => { if (correctSoundPlayer?.loaded) correctSoundPlayer.start(); };
+        const errorKeySound = () => { if (audioReady) errorSynth.triggerAttackRelease("C1", "8n"); };
+        
+        function handleThemeChange(e) {
+            if (e.target.tagName !== 'BUTTON') return;
+            const theme = e.target.dataset.theme;
+            applyTheme(theme);
+            localStorage.setItem('theme', theme);
+            themeSelector.querySelector('.active').classList.remove('active');
+            e.target.classList.add('active');
+        }
+
+        function applyTheme(theme) {
+            document.body.className = document.body.className.replace(/theme-\w+/g, '');
+            document.body.classList.add(`theme-${theme}`);
+            if (resultsChart) {
+                drawResultsGraph();
+            }
+        }
+
+        function handleSettingsChange(e) {
+            if (e.target.tagName !== 'BUTTON' || (gameState === 'typing' || gameState === 'paused')) {
+                 if(e.target.id === 'zen-mode-btn' || e.target.parentElement.id === 'zen-mode-btn') return;
+            }
+            if (gameState !== 'waiting' && gameState !== 'finished') return;
+
+            const parentId = e.target.parentElement.id;
+            
+            if (parentId === 'difficulty-selector') {
+                document.querySelectorAll('#difficulty-selector button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                difficulty = e.target.dataset.difficulty;
+            } else if (parentId === 'time-selector') {
+                document.querySelectorAll('#time-selector button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                gameDuration = parseInt(e.target.dataset.time, 10);
+            }
+            resetTest();
+        }
+
+        function toggleZenMode(forceState) {
+            isZenMode = typeof forceState === 'boolean' ? forceState : !isZenMode;
+            document.body.classList.toggle('zen-mode-active', isZenMode);
+            zenModeBtn.classList.toggle('active', isZenMode);
+        }
+
+        function generateWords() {
+            const wordList = { 'easy': commonWords, 'medium': mediumWords, 'hard': hardWords }[difficulty] || commonWords;
+            words = Array.from({ length: 200 }, () => wordList[Math.floor(Math.random() * wordList.length)]);
+            wordDisplay.innerHTML = words.map(word => `<span class="word">${word.split('').map(l => `<span class="letter">${l}</span>`).join('')}</span>`).join(' ');
+        }
+
+        function resetTest(fromButton = false) {
+            clearInterval(timeInterval); clearTimeout(inactivityTimer);
+            if (fromButton && resultsChart) resultsChart.destroy();
+            
+            gameState = 'waiting';
+            time = gameDuration;
+            timeDisplay.textContent = time; wpmDisplay.textContent = '0'; accuracyDisplay.textContent = '100%';
+            wordIndex = 0; letterIndex = 0;
+            correctChars = 0; incorrectChars = 0; totalChars = 0; rawChars = 0;
+            wpmHistory = [];
+            
+            document.querySelectorAll('#settings button').forEach(btn => btn.disabled = false);
+
+            pauseOverlay.classList.add('hidden');
+            countdownOverlay.classList.add('hidden');
+            resultsScreen.style.display = 'none';
+            easterEgg.classList.add('hidden');
+            wordsContainer.classList.remove('focused');
+            
+            generateWords();
+            updateCaretPosition();
+        }
+        
+        function startCountdown() {
+            if (gameState !== 'waiting') return;
+            gameState = 'countdown';
+            countdownOverlay.style.display = 'flex';
+            let count = 3;
+            countdownTimer.textContent = count;
+            countdownTimer.style.animation = 'countdown 1s ease-out';
+            const countdownInterval = setInterval(() => {
+                count--;
+                countdownTimer.textContent = count;
+                countdownTimer.style.animation = 'none';
+                void countdownTimer.offsetWidth;
+                countdownTimer.style.animation = 'countdown 1s ease-out';
+                if (count === 0) {
+                    clearInterval(countdownInterval);
+                    countdownOverlay.style.display = 'none';
+                    startGame();
+                }
+            }, 1000);
+        }
+
+        function startGame() {
+            initAudio();
+            gameState = 'typing';
+            startTime = performance.now();
+            document.querySelectorAll('#settings button:not(#zen-mode-btn), #settings button svg, #settings button span').forEach(el => {
+                if (!el.closest('#zen-mode-btn')) el.disabled = true;
+            });
+            wordsContainer.classList.add('focused');
+            timeInterval = setInterval(updateTime, 1000);
+            resetInactivityTimer();
+        }
+        
+        function pauseGame() {
+            if (gameState !== 'typing') return;
+            clearInterval(timeInterval); clearTimeout(inactivityTimer);
+            gameState = 'paused';
+            pauseOverlay.style.display = 'flex';
+        }
+
+        function resumeGame() {
+            if (gameState !== 'paused') return;
+            gameState = 'typing';
+            startTime = performance.now() - ((gameDuration - time) * 1000);
+            pauseOverlay.style.display = 'none';
+            timeInterval = setInterval(updateTime, 1000);
+            resetInactivityTimer();
+        }
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(pauseGame, 3000);
+        }
+
+        function updateTime() {
+            time--;
+            timeDisplay.textContent = time;
+            const elapsedMinutes = (gameDuration - time) / 60;
+            const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
+            wpmHistory.push(wpm);
+            if (time <= 0) endGame();
+        }
+        
+        function endGame() {
+            clearInterval(timeInterval); clearTimeout(inactivityTimer);
+            gameState = 'finished';
+            document.querySelectorAll('#settings button').forEach(btn => btn.disabled = false);
+
+            const elapsedMinutes = gameDuration / 60;
+            const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
+            const rawWpm = elapsedMinutes > 0 ? Math.round((rawChars / 5) / elapsedMinutes) : 0;
+            const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
+
+            const highscoreKey = `highscore-${difficulty}-${gameDuration}`;
+            const currentHighscore = localStorage.getItem(highscoreKey) || 0;
+            let newHighscore = currentHighscore;
+            if (wpm > currentHighscore) {
+                localStorage.setItem(highscoreKey, wpm);
+                newHighscore = wpm;
+            }
+
+            resultsWpm.textContent = wpm;
+            resultsRawWpm.textContent = rawWpm;
+            resultsAccuracy.textContent = `${accuracy}%`;
+            resultsHighscore.textContent = newHighscore;
+            resultsDetails.textContent = `Chars: ${totalChars} (Correct: ${correctChars} | Incorrect: ${incorrectChars})`
+            
+            if (wpm === 67) easterEgg.classList.remove('hidden');
+            
+            resultsScreen.style.display = 'flex';
+            drawResultsGraph();
+        }
+
+        function handleKeyPress(e) {
+            if (e.key.length > 1 && e.key !== 'Backspace') return;
+            if (gameState === 'finished' || gameState === 'countdown') return;
+            if (gameState === 'paused') { resumeGame(); return; }
+            if (gameState === 'waiting') { startCountdown(); return; }
+            
+            resetInactivityTimer();
+
+            const currentWordEl = wordDisplay.children[wordIndex];
+            if (!currentWordEl) return;
+
+            if (e.key === 'Backspace') {
+                if (letterIndex > 0) {
+                    letterIndex--;
+                    const letterEl = currentWordEl.children[letterIndex];
+                    if (letterEl.classList.contains('incorrect')) incorrectChars--;
+                    else if (letterEl.classList.contains('correct')) correctChars--;
+                    totalChars--; rawChars--;
+                    letterEl.classList.remove('correct', 'incorrect');
+                } else if (wordIndex > 0) {
+                    wordIndex--;
+                    const prevWordEl = wordDisplay.children[wordIndex];
+                    letterIndex = prevWordEl.children.length;
+                    totalChars--; correctChars--; rawChars--;
+                }
+            } else if (e.key === ' ') {
+                if (letterIndex > 0 && letterIndex === currentWordEl.children.length) {
+                    totalChars++; correctChars++; rawChars++;
+                    wordIndex++; letterIndex = 0;
+                    correctKeySound();
+                }
+            } else {
+                const currentLetterEl = currentWordEl.children[letterIndex];
+                if (currentLetterEl) {
+                    totalChars++; rawChars++;
+                    if (e.key === currentLetterEl.textContent) {
+                        currentLetterEl.classList.add('correct');
+                        correctKeySound(); correctChars++;
+                    } else {
+                        currentLetterEl.classList.add('incorrect');
+                        errorKeySound(); incorrectChars++;
+                    }
+                    letterIndex++;
+                }
+            }
+            updateLiveStats(); updateCaretPosition();
+            e.preventDefault();
+        }
+
+        function updateLiveStats() {
+            const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
+            accuracyDisplay.textContent = `${accuracy}%`;
+            const elapsedMs = performance.now() - startTime;
+            const elapsedMinutes = elapsedMs / 60000;
+            const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
+            wpmDisplay.textContent = wpm;
+        }
+        
+        function updateCaretPosition() {
+            const currentWordEl = wordDisplay.children[wordIndex];
+            if (!currentWordEl) return;
+            const currentLetterEl = currentWordEl.children[letterIndex];
+            const letterHeight = currentWordEl.offsetHeight * 0.9;
+            caret.style.height = `${letterHeight}px`;
+
+            if (currentLetterEl) {
+                caret.style.top = `${currentLetterEl.offsetTop + (currentWordEl.offsetHeight - letterHeight) / 2}px`;
+                caret.style.left = `${currentLetterEl.offsetLeft}px`;
+            } else {
+                const lastLetter = currentWordEl.children[currentWordEl.children.length - 1];
+                if (lastLetter) {
+                    caret.style.top = `${lastLetter.offsetTop + (currentWordEl.offsetHeight - letterHeight) / 2}px`;
+                    caret.style.left = `${lastLetter.offsetLeft + lastLetter.offsetWidth}px`;
+                } else {
+                    caret.style.top = `${currentWordEl.offsetTop + (currentWordEl.offsetHeight - letterHeight) / 2}px`;
+                    caret.style.left = `${currentWordEl.offsetLeft}px`;
+                }
+            }
+            if (currentWordEl.offsetTop > wordsContainer.scrollTop + wordsContainer.clientHeight / 1.5) {
+                 wordsContainer.scrollTop = currentWordEl.offsetTop - wordsContainer.clientHeight / 2;
+            }
+        }
+        
+        function drawResultsGraph() {
+            if (resultsChart) resultsChart.destroy();
+            const themeStyles = getComputedStyle(document.body);
+            const labels = Array.from({length: wpmHistory.length}, (_, i) => i + 1);
+            resultsChart = new Chart(resultsChartCanvas, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'WPM', data: wpmHistory,
+                        borderColor: themeStyles.getPropertyValue('--graph-line').trim(),
+                        backgroundColor: themeStyles.getPropertyValue('--graph-fill').trim(),
+                        fill: true, tension: 0.4, pointRadius: 2,
+                        pointBackgroundColor: themeStyles.getPropertyValue('--graph-line').trim()
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: themeStyles.getPropertyValue('--dim-text').trim() } },
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: themeStyles.getPropertyValue('--dim-text').trim() } }
+                    },
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: { enabled: true, mode: 'index', intersect: false,
+                            backgroundColor: themeStyles.getPropertyValue('--card-bg').trim(),
+                            titleColor: themeStyles.getPropertyValue('--graph-line').trim(),
+                            bodyColor: themeStyles.getPropertyValue('--primary-text').trim(),
+                            borderColor: themeStyles.getPropertyValue('--button-border').trim(),
+                            borderWidth: 1, padding: 10,
+                            callbacks: {
+                                title: (context) => `Second: ${context[0].label}`,
+                                label: (context) => `WPM: ${context.raw}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        const ctx = bgCanvas.getContext('2d');
+        let lines = [];
+        function resizeCanvas() {
+            bgCanvas.width = window.innerWidth; bgCanvas.height = window.innerHeight;
+            lines = [];
+            for(let i=0; i<100; i++) {
+                lines.push({
+                    x: Math.random() * bgCanvas.width, y: Math.random() * bgCanvas.height,
+                    length: Math.random() * 20 + 5, width: Math.random() * 1 + 0.5,
+                    speed: Math.random() * 0.4 + 0.1, angle: Math.random() * Math.PI * 2,
+                    color: `rgba(0, 150, 136, ${Math.random() * 0.5 + 0.1})`
+                });
+            }
+        }
+        function animateBackground() {
+            ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            lines.forEach(line => {
+                line.x += Math.cos(line.angle) * line.speed; line.y += Math.sin(line.angle) * line.speed;
+                if (line.x < 0) line.x = bgCanvas.width; if (line.x > bgCanvas.width) line.x = 0;
+                if (line.y < 0) line.y = bgCanvas.height; if (line.y > bgCanvas.height) line.y = 0;
+                ctx.beginPath();
+                ctx.moveTo(line.x, line.y);
+                ctx.lineTo(line.x + Math.cos(line.angle) * line.length, line.y + Math.sin(line.angle) * line.length);
+                ctx.strokeStyle = line.color; ctx.lineWidth = line.width; ctx.stroke();
+            });
+            requestAnimationFrame(animateBackground);
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        const savedTheme = localStorage.getItem('theme') || 'aqua';
+        applyTheme(savedTheme);
+        themeSelector.querySelector('.active').classList.remove('active');
+        themeSelector.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
+
+        resetTest();
+        resizeCanvas();
+        animateBackground();
+    </script>
+</body>
+</html>
+
+
+
+
+
