@@ -7,8 +7,9 @@
   \ \  \    \ \  \ \  \ \  \ \  \_\\ \ \  \_|\ \       \ \  \|\  \   \/  /  /        \ \  \ \  \ \  \\\  \ \  \ \  \ \  \\\  \ \  \ \  \     
    \ \__\    \ \__\ \__\ \__\ \_______\ \_______\       \ \_______\__/  / /           \ \__\ \__\ \_______\ \__\ \__\ \_____  \ \__\ \__\    
     \|__|     \|__|\|__|\|__|\|_______|\|_______|        \|_______|\___/ /             \|__|\|__|\|_______|\|__|\|__|\|___| \__\|__|\|__|    
-                                                                  \|___|/                                                  \|__|             
-                                                                                                   
+                                                                  \|___|/                        _                       \|__|             
+               D                                                                                                                     
+                                      _                                              _                                              
 -->
 <html lang="en">
 <head>
@@ -21,133 +22,63 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-gradient-start: #002B36;
-            --bg-gradient-end: #004D40;
-            --card-bg: rgba(0, 51, 61, 0.75);
-            --card-border: rgba(0, 150, 136, 0.5);
-            --primary-text: #E0F2F1;
-            --highlight-text: #FFFFFF;
-            --dim-text: #80CBC4;
-            --caret-color: #64FFDA;
-            --error-text: #FFAB91;
-            --error-underline: #FF8A65;
-            --button-bg: rgba(0, 150, 136, 0.3);
-            --button-border: #009688;
-            --button-hover-bg: #009688;
-            --graph-line: #64FFDA;
-            --graph-fill: rgba(100, 255, 218, 0.2);
-            --font-main: 'Poppins', sans-serif;
-            --font-mono: 'Roboto Mono', monospace;
+            --bg-gradient-start: #002B36; --bg-gradient-end: #004D40;
+            --card-bg: rgba(0, 51, 61, 0.75); --card-border: rgba(0, 150, 136, 0.5);
+            --primary-text: #E0F2F1; --highlight-text: #FFFFFF; --dim-text: #80CBC4;
+            --caret-color: #64FFDA; --error-text: #FFAB91; --error-underline: #FF8A65;
+            --button-bg: rgba(0, 150, 136, 0.3); --button-border: #009688;
+            --button-hover-bg: #009688; --graph-line: #64FFDA; --graph-fill: rgba(100, 255, 218, 0.2);
+            --font-main: 'Poppins', sans-serif; --font-mono: 'Roboto Mono', monospace;
         }
         .theme-dusk {
-            --bg-gradient-start: #232526;
-            --bg-gradient-end: #414345;
-            --card-bg: rgba(45, 48, 51, 0.75);
-            --card-border: rgba(189, 189, 189, 0.5);
-            --primary-text: #E0E0E0;
-            --highlight-text: #FFFFFF;
-            --dim-text: #BDBDBD;
-            --caret-color: #FDD835;
-            --error-text: #EF9A9A;
-            --error-underline: #E57373;
-            --button-bg: rgba(117, 117, 117, 0.3);
-            --button-border: #9E9E9E;
-            --button-hover-bg: #9E9E9E;
-            --graph-line: #FDD835;
-            --graph-fill: rgba(253, 216, 53, 0.2);
+            --bg-gradient-start: #232526; --bg-gradient-end: #414345;
+            --card-bg: rgba(45, 48, 51, 0.75); --card-border: rgba(189, 189, 189, 0.5);
+            --primary-text: #E0E0E0; --highlight-text: #FFFFFF; --dim-text: #BDBDBD;
+            --caret-color: #FDD835; --error-text: #EF9A9A; --error-underline: #E57373;
+            --button-bg: rgba(117, 117, 117, 0.3); --button-border: #9E9E9E;
+            --button-hover-bg: #9E9E9E; --graph-line: #FDD835; --graph-fill: rgba(253, 216, 53, 0.2);
         }
         .theme-crimson {
-            --bg-gradient-start: #3E0000;
-            --bg-gradient-end: #6B0000;
-            --card-bg: rgba(69, 4, 4, 0.75);
-            --card-border: rgba(239, 83, 80, 0.5);
-            --primary-text: #FFCDD2;
-            --highlight-text: #FFFFFF;
-            --dim-text: #E57373;
-            --caret-color: #FF8A80;
-            --error-text: #FFFF8D;
-            --error-underline: #FBC02D;
-            --button-bg: rgba(229, 115, 115, 0.3);
-            --button-border: #EF5350;
-            --button-hover-bg: #EF5350;
-            --graph-line: #FF8A80;
-            --graph-fill: rgba(255, 138, 128, 0.2);
+            --bg-gradient-start: #3E0000; --bg-gradient-end: #6B0000;
+            --card-bg: rgba(69, 4, 4, 0.75); --card-border: rgba(239, 83, 80, 0.5);
+            --primary-text: #FFCDD2; --highlight-text: #FFFFFF; --dim-text: #E57373;
+            --caret-color: #FF8A80; --error-text: #FFFF8D; --error-underline: #FBC02D;
+            --button-bg: rgba(229, 115, 115, 0.3); --button-border: #EF5350;
+            --button-hover-bg: #EF5350; --graph-line: #FF8A80; --graph-fill: rgba(255, 138, 128, 0.2);
         }
-
-        body {
-            font-family: var(--font-main);
-            color: var(--primary-text);
-            background-color: var(--bg-gradient-start);
-            overflow: hidden;
-            transition: background 0.5s ease;
-        }
-        #background-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
-            transition: background 0.5s ease;
-        }
-        .aqua-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 1rem;
-            z-index: 1;
-            transition: all 0.5s ease;
-        }
-        #words-container {
-            overflow: hidden; user-select: none;
-            transition: filter 0.3s ease, transform 0.4s ease-in-out;
-            filter: blur(4px);
-            font-family: var(--font-mono);
-        }
+        body { font-family: var(--font-main); color: var(--primary-text); background-color: var(--bg-gradient-start); overflow: hidden; transition: background 0.5s ease; }
+        #background-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)); transition: background 0.5s ease; }
+        .aqua-card { background-color: var(--card-bg); border: 1px solid var(--card-border); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 1rem; z-index: 1; transition: all 0.5s ease; }
+        #words-container { overflow: hidden; user-select: none; transition: filter 0.3s ease, transform 0.4s ease-in-out; filter: blur(4px); font-family: var(--font-mono); }
         #words-container.focused, #words-container:hover { filter: blur(0px); }
+        #word-display { transition: opacity 0.2s ease-out; }
         .letter { color: var(--dim-text); transition: color 0.2s ease, text-shadow 0.2s ease; }
         .letter.correct { color: var(--highlight-text); text-shadow: 0 0 8px var(--caret-color); }
         .letter.incorrect { color: var(--error-text); text-decoration: underline; text-decoration-color: var(--error-underline); }
-        #caret {
-            width: 3px; background-color: var(--caret-color); box-shadow: 0 0 10px var(--caret-color);
-            animation: blink 1s infinite; position: absolute;
-            transition: all 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94); border-radius: 3px;
-        }
+        #caret { width: 3px; background-color: var(--caret-color); box-shadow: 0 0 10px var(--caret-color); animation: blink 1s infinite; position: absolute; transition: all 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94); border-radius: 3px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .btn-aqua {
-            background-color: var(--button-bg); border: 1px solid var(--button-border); color: var(--primary-text);
-            transition: all 0.3s ease;
-        }
+        .btn-aqua { background-color: var(--button-bg); border: 1px solid var(--button-border); color: var(--primary-text); transition: all 0.3s ease; }
         .btn-aqua:hover:not(:disabled) { background-color: var(--button-hover-bg); color: white; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
         .btn-aqua:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-aqua.active { background-color: var(--button-hover-bg); color: white; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); }
         #results-screen { animation: fadeIn 0.5s ease-out; z-index: 10; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        #countdown-overlay { z-index: 20; }
-        @keyframes countdown { from { transform: scale(1.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
-        #stats-display {
-            transition: opacity 0.4s ease-in-out, max-height 0.4s ease-in-out, margin 0.4s ease-in-out, padding 0.4s ease-in-out;
-            max-height: 200px;
-        }
-        .zen-mode-active #stats-display {
-            opacity: 0;
-            max-height: 0;
-            margin-bottom: 0 !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            overflow: hidden;
-        }
-        .zen-mode-active #words-container {
-            transform: translateY(-20px);
-        }
-        
+        #stats-display { transition: opacity 0.4s ease-in-out, max-height 0.4s ease-in-out, margin 0.4s ease-in-out, padding 0.4s ease-in-out; max-height: 200px; }
+        .zen-mode-active #stats-display { opacity: 0; max-height: 0; margin-bottom: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; overflow: hidden; }
+        .zen-mode-active #words-container { transform: translateY(-20px); }
         #settings-modal { z-index: 50; }
         .modal-content { animation: fadeIn 0.3s ease-out; }
-
         #easter-egg { animation: glow 2s infinite alternate; }
         @keyframes glow {
             from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--caret-color), 0 0 40px var(--caret-color); }
             to { text-shadow: 0 0 20px #fff, 0 0 30px var(--dim-text), 0 0 40px var(--dim-text), 0 0 50px var(--dim-text); }
+        }
+        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
         }
     </style>
 </head>
@@ -174,66 +105,90 @@
     </div>
 
     <div class="aqua-card w-full max-w-6xl p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg relative">
-        <button id="open-settings-btn" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311a1.464 1.464 0 0 1-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283-.698-2.686-.705-1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872 2.105l.34-.1c-1.4-.413-1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/></svg>
+        <button id="open-settings-btn" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10 z-20">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg>
         </button>
-
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 tracking-wider" style="color: var(--highlight-text); text-shadow: 0 0 10px var(--caret-color);">Auaqa Typer</h1>
         
-        <div id="settings" class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 mb-6">
-             <div id="difficulty-selector" class="flex items-center space-x-2">
-                <span class="text-sm" style="color: var(--dim-text);">Difficulty:</span>
-                <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-difficulty="easy">Easy</button>
-                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-difficulty="medium">Medium</button>
-                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-difficulty="hard">Hard</button>
-            </div>
-            <div id="time-selector" class="flex items-center space-x-2">
-                <span class="text-sm" style="color: var(--dim-text);">Time:</span>
-                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="15">15s</button>
-                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="30">30s</button>
-                <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-time="60">60s</button>
-                <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="120">120s</button>
-            </div>
-             <div id="mode-selector" class="flex items-center space-x-2">
-                <span class="text-sm" style="color: var(--dim-text);">Mode:</span>
-                <button id="zen-mode-btn" class="btn-aqua px-3 py-1 rounded-md text-sm flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-peace" viewBox="0 0 16 16"><path d="M14 13.292A8 8 0 0 0 8.5.015v7.778l5.5 5.5zm-1.21 1.21a8 8 0 0 1-11.58 0l5.5-5.5 6.08 6.08zM8.5 16a8 8 0 0 1-5.292-14L8.5 7.222v8.778z"/></svg>
-                    Zen
-                </button>
+        <div id="main-content">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 tracking-wider" style="color: var(--highlight-text); text-shadow: 0 0 10px var(--caret-color);">Auaqa Typer</h1>
+            
+            <div id="settings" class="flex flex-wrap justify-center items-center gap-x-4 gap-y-4 mb-6">
+                 <div class="flex items-center space-x-2">
+                    <button id="toggle-mode-btn" class="btn-aqua px-3 py-1 rounded-md text-sm">Code Mode</button>
+                </div>
+                <div id="difficulty-selector" class="flex items-center space-x-2">
+                    <span class="text-sm font-medium" style="color: var(--dim-text);">Difficulty:</span>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-difficulty="easy">Easy</button>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-difficulty="medium">Medium</button>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-difficulty="hard">Hard</button>
+                </div>
+                <div id="language-selector" class="hidden flex items-center space-x-2">
+                    <span class="text-sm font-medium" style="color: var(--dim-text);">Language:</span>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-language="cpp">C++</button>
+                </div>
+                <div id="time-selector" class="flex items-center space-x-2">
+                    <span class="text-sm font-medium" style="color: var(--dim-text);">Time:</span>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="15">15s</button>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="30">30s</button>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-time="60">60s</button>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-time="120">120s</button>
+                </div>
+                 <div id="zen-mode-selector" class="flex items-center space-x-2">
+                     <button id="zen-mode-btn" class="btn-aqua px-3 py-1 rounded-md text-sm flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-peace" viewBox="0 0 16 16"><path d="M14 13.292A8 8 0 0 0 8.5.015v7.778l5.5 5.5zm-1.21 1.21a8 8 0 0 1-11.58 0l5.5-5.5 6.08 6.08zM8.5 16a8 8 0 0 1-5.292-14L8.5 7.222v8.778z"/></svg>
+                        Zen
+                    </button>
+                </div>
             </div>
         </div>
 
         <div id="test-area" class="relative">
-             <div id="countdown-overlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm flex-col justify-center items-center text-center p-8 rounded-lg hidden">
-                <h2 id="countdown-timer" class="text-8xl font-bold text-white">3</h2>
-            </div>
              <div id="pause-overlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm flex-col justify-center items-center text-center p-8 rounded-lg hidden z-10">
                 <h2 class="text-4xl font-bold text-yellow-300 animate-pulse">Paused</h2>
                 <p class="text-gray-300 mt-2">Press any key to resume</p>
             </div>
-            <div id="results-screen" class="absolute inset-0 bg-black/70 backdrop-blur-sm flex-col justify-center items-center text-center p-4 sm:p-8 rounded-lg hidden">
-                <h2 class="text-3xl font-bold mb-2" style="color: var(--highlight-text);">Results</h2>
-                <div id="easter-egg" class="hidden font-bold mb-2">SECRET WPM ACHIEVED!</div>
-                <div class="flex flex-wrap justify-around w-full max-w-2xl my-4">
-                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">WPM</p><p id="results-wpm" class="text-4xl sm:text-5xl font-bold" style="color: var(--highlight-text);">0</p></div>
-                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">Accuracy</p><p id="results-accuracy" class="text-4xl sm:text-5xl font-bold" style="color: var(--highlight-text);">0%</p></div>
-                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">High Score</p><p id="results-highscore" class="text-4xl sm:text-5xl font-bold text-yellow-300">0</p></div>
-                    <div class="m-2"><p class="text-sm uppercase" style="color: var(--dim-text);">Raw WPM</p><p id="results-raw-wpm" class="text-4xl sm:text-5xl font-bold" style="color: var(--highlight-text);">0</p></div>
+            <div id="results-screen" class="absolute inset-0 flex-col justify-center items-center text-center p-4 sm:p-8 hidden">
+                <div class="w-full max-w-4xl">
+                    <h2 class="text-3xl font-bold mb-4" style="color: var(--highlight-text);">Results</h2>
+                    <div id="easter-egg" class="hidden font-bold mb-2">SECRET WPM ACHIEVED!</div>
+                    
+                    <div class="flex flex-wrap justify-center items-center gap-x-8 sm:gap-x-12 gap-y-4 mb-6">
+                         <div>
+                            <p class="text-base sm:text-lg uppercase" style="color: var(--dim-text);">WPM</p>
+                            <p id="results-wpm" class="text-6xl sm:text-7xl font-bold" style="color: var(--highlight-text);">0</p>
+                         </div>
+                         <div>
+                            <p class="text-base sm:text-lg uppercase" style="color: var(--dim-text);">Accuracy</p>
+                            <p id="results-accuracy" class="text-6xl sm:text-7xl font-bold" style="color: var(--highlight-text);">0%</p>
+                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 w-full mt-4 border-t pt-4" style="border-color: var(--card-border);">
+                        <div><p class="text-sm uppercase" style="color: var(--dim-text);">Consistency</p><p id="results-consistency" class="text-2xl sm:text-3xl font-bold" style="color: var(--highlight-text);">0%</p></div>
+                        <div><p class="text-sm uppercase" style="color: var(--dim-text);">High Score</p><p id="results-highscore" class="text-2xl sm:text-3xl font-bold text-yellow-300">0</p></div>
+                        <div><p class="text-sm uppercase" style="color: var(--dim-text);">Raw WPM</p><p id="results-raw-wpm" class="text-2xl sm:text-3xl font-bold" style="color: var(--highlight-text);">0</p></div>
+                    </div>
+                
+                     <p id="results-details" class="text-base text-gray-400 my-4">Chars: 0 (Correct: 0 | Incorrect: 0)</p>
+                     <div class="w-full max-w-xl h-48 sm:h-64 mx-auto mb-4"><canvas id="results-chart"></canvas></div>
+                    <button id="restart-button" class="btn-aqua px-10 py-3 rounded-lg text-xl font-bold">Try Again</button>
                 </div>
-                 <p id="results-details" class="text-gray-400 mb-4">Chars: 0 (Correct: 0 | Incorrect: 0)</p>
-                 <div class="w-full max-w-xl h-48 sm:h-64 mb-4"><canvas id="results-chart"></canvas></div>
-                <button id="restart-button" class="btn-aqua px-10 py-3 rounded-lg text-xl font-bold">Try Again</button>
             </div>
-            <div id="stats-display" class="flex justify-between items-center text-center bg-black/20 p-2 sm:p-4 rounded-lg mb-4 sm:mb-6 border" style="border-color: var(--button-border);">
-                <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">WPM</h3><p id="wpm-display" class="text-3xl sm:text-4xl font-bold transition-all" style="color: var(--highlight-text);">0</p></div>
-                <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">Time</h3><p id="time-display" class="text-3xl sm:text-4xl font-bold" style="color: var(--highlight-text);">60</p></div>
-                <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">Accuracy</h3><p id="accuracy-display" class="text-3xl sm:text-4xl font-bold transition-all" style="color: var(--highlight-text);">100%</p></div>
+            
+            <div id="main-test-content">
+                <div id="stats-display" class="flex justify-between items-center text-center bg-black/20 p-2 sm:p-4 rounded-lg mb-4 sm:mb-6 border" style="border-color: var(--button-border);">
+                    <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">WPM</h3><p id="wpm-display" class="text-3xl sm:text-4xl font-bold transition-all" style="color: var(--highlight-text);">0</p></div>
+                    <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">Time</h3><p id="time-display" class="text-3xl sm:text-4xl font-bold" style="color: var(--highlight-text);">60</p></div>
+                    <div class="w-1/3"><h3 class="text-xs sm:text-sm uppercase" style="color: var(--dim-text);">Accuracy</h3><p id="accuracy-display" class="text-3xl sm:text-4xl font-bold transition-all" style="color: var(--highlight-text);">100%</p></div>
+                </div>
+                <div id="words-container" class="relative bg-black/30 p-4 rounded-lg cursor-text h-36 sm:h-40 md:h-44 lg:h-48 text-xl sm:text-2xl" tabindex="0">
+                     <div id="caret"></div>
+                     <div id="word-display" class="leading-relaxed"></div>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-4">Click the text box or start typing to begin.</p>
             </div>
-            <div id="words-container" class="relative bg-black/30 p-4 rounded-lg cursor-text h-36 sm:h-40 md:h-44 lg:h-48 text-xl sm:text-2xl" tabindex="0">
-                 <div id="caret"></div>
-                 <div id="word-display" class="leading-relaxed"></div>
-            </div>
-            <p class="text-center text-sm text-gray-500 mt-4">Click the text box or start typing to begin.</p>
         </div>
     </div>
 
@@ -248,13 +203,12 @@
         const resultsScreen = document.getElementById('results-screen');
         const resultsWpm = document.getElementById('results-wpm');
         const resultsAccuracy = document.getElementById('results-accuracy');
+        const resultsConsistency = document.getElementById('results-consistency');
         const resultsDetails = document.getElementById('results-details');
         const resultsHighscore = document.getElementById('results-highscore');
         const resultsRawWpm = document.getElementById('results-raw-wpm');
         const caret = document.getElementById('caret');
         const pauseOverlay = document.getElementById('pause-overlay');
-        const countdownOverlay = document.getElementById('countdown-overlay');
-        const countdownTimer = document.getElementById('countdown-timer');
         const resultsChartCanvas = document.getElementById('results-chart');
         const zenModeBtn = document.getElementById('zen-mode-btn');
         const easterEgg = document.getElementById('easter-egg');
@@ -263,33 +217,65 @@
         const openSettingsBtn = document.getElementById('open-settings-btn');
         const closeSettingsBtn = document.getElementById('close-settings-btn');
         const themeSelector = document.getElementById('theme-selector');
+        const languageSelector = document.getElementById('language-selector');
+        const difficultySelector = document.getElementById('difficulty-selector');
+        const toggleModeBtn = document.getElementById('toggle-mode-btn');
+        const mainTestContent = document.getElementById('main-test-content');
+        const mainContent = document.getElementById('main-content');
 
         const commonWords=['the','be','to','of','and','a','in','that','have','I','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us'];
         const mediumWords=['ability','about','above','accept','according','account','across','action','activity','actually','address','admin','admit','adult','affect','after','again','against','agency','agent','agree','ahead','allow','almost','alone','along','already','also','although','always','amazing','among','amount','analysis','animal','another','answer','anyone','anything','appear','apply','approach','area','argue','around','arrive','article','artist','assume','attack','attend','author','available','avoid','away','baby','back','balance','ball'];
-        const hardWords=['interface,','protocol.','algorithm,','network.','database,','javascript.','python,','firewall.','encryption,','cybernetics.','nanotechnology,','bandwidth.','framework,','compiler.','debugger,','kernel.','malware,','phishing.','server,','client.','binary,','hexadecimal.','virtualization,','cloud.','container,','kubernetes.','agile,','scrum.','waterfall,','backend.','frontend,','fullstack,','devops.','repository,','github.','gitlab,','bitbucket.','lambda,','function.','variable,','constant.','object,','class.','inheritance,','polymorphism.','encapsulation,'];
+        const hardWords=['interface,','protocol.','algorithm,','network.','database,','javascript.','python,','firewall.','encryption,','cybernetics.','nanotechnology,','bandwidth.','framework,','compiler.','debugger,','kernel.','malware,','phishing.','server,','client.','binary,','hexadecimal.','virtualization,','cloud.','container,','kubernetes.','agile,','scrum.','waterfall,','backend.','frontend,','fullstack,','devops.','repository,','github,','gitlab,','bitbucket.','lambda,','function.','variable,','constant.','object,','class.','inheritance,','polymorphism.','encapsulation,'];
+        const cppSnippets = [
+            '#include <iostream>',
+            '#include <vector>',
+            'using namespace std;',
+            'int main() {',
+            'cout << "Hello!" << endl;',
+            'int myNum = 15;',
+            'string greeting = "Hi";',
+            'for (int i = 0; i < 5; i++) {',
+            'if (x > y) {',
+            'vector<string> myVec;',
+            'myVec.push_back("Test");',
+            'while (i < 10) {',
+            '// This is a comment',
+            '/* Block comment */',
+            'return 0;',
+            'public:',
+            'private:',
+            'class MyClass {',
+            'int* ptr = nullptr;',
+            'delete ptr;',
+            '};',
+            '}'
+        ];
         let words = [];
 
         let time, gameDuration = 60;
         let gameState = 'waiting';
         let timeInterval, inactivityTimer, startTime;
+        let practiceMode = 'words';
+        let codeLanguage = 'cpp';
         let difficulty = 'easy';
         let wordIndex = 0, letterIndex = 0;
         let correctChars = 0, incorrectChars = 0, totalChars = 0, rawChars = 0;
         let wpmHistory = [];
         let resultsChart = null;
         let isZenMode = false;
-
         let audioReady = false;
         let errorSynth, correctSoundPlayer;
+        let currentWpm = 0, targetWpm = 0;
+        let wpmAnimationId;
 
         document.addEventListener('keydown', handleKeyPress);
         restartButton.addEventListener('click', () => resetTest(true));
         settings.addEventListener('click', handleSettingsChange);
-        wordsContainer.addEventListener('click', () => { if (gameState === 'waiting') startCountdown(); });
-        zenModeBtn.addEventListener('click', () => toggleZenMode());
+        wordsContainer.addEventListener('click', () => { if (gameState === 'waiting') startGame(); });
         openSettingsBtn.addEventListener('click', () => { initAudio(); settingsModal.classList.remove('hidden'); });
         closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
         themeSelector.addEventListener('click', handleThemeChange);
+        toggleModeBtn.addEventListener('click', togglePracticeMode);
 
         function initAudio() {
             if (audioReady) return;
@@ -299,7 +285,6 @@
                 audioReady = true;
             });
         }
-
         const correctKeySound = () => { if (correctSoundPlayer?.loaded) correctSoundPlayer.start(); };
         const errorKeySound = () => { if (audioReady) errorSynth.triggerAttackRelease("C1", "8n"); };
         
@@ -319,95 +304,111 @@
             if (resultsChart) drawResultsGraph();
         }
 
+        function togglePracticeMode() {
+            if (gameState !== 'waiting') return;
+            initAudio();
+            practiceMode = practiceMode === 'words' ? 'code' : 'words';
+            toggleModeBtn.textContent = practiceMode === 'words' ? 'Code Mode' : 'Word Mode';
+            languageSelector.classList.toggle('hidden', practiceMode !== 'code');
+            difficultySelector.classList.toggle('hidden', practiceMode === 'code');
+            resetTest();
+        }
+
         function handleSettingsChange(e) {
             if (e.target.tagName !== 'BUTTON') return;
-            if ((gameState === 'typing' || gameState === 'paused') && !e.target.closest('#mode-selector')) return;
-            
+            const parent = e.target.closest('div');
+            if (!parent) return;
             initAudio();
 
-            const parentId = e.target.closest('div').id;
+            if (parent.id === 'zen-mode-selector') {
+                toggleZenMode();
+                return;
+            }
             
-            if (parentId === 'difficulty-selector') {
+            if (gameState !== 'waiting') return;
+
+            if (parent.id === 'difficulty-selector') {
                 difficulty = e.target.dataset.difficulty;
-                document.querySelectorAll('#difficulty-selector button').forEach(btn => btn.classList.toggle('active', btn === e.target));
+                parent.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
                 resetTest();
-            } else if (parentId === 'time-selector') {
+            } else if (parent.id === 'language-selector') {
+                codeLanguage = e.target.dataset.language;
+                parent.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                resetTest();
+            } else if (parent.id === 'time-selector') {
                 gameDuration = parseInt(e.target.dataset.time, 10);
-                document.querySelectorAll('#time-selector button').forEach(btn => btn.classList.toggle('active', btn === e.target));
+                parent.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
                 resetTest();
             }
         }
 
         function toggleZenMode() {
-            initAudio();
             isZenMode = !isZenMode;
             document.body.classList.toggle('zen-mode-active', isZenMode);
             zenModeBtn.classList.toggle('active', isZenMode);
         }
 
-        function generateWords() {
-            const wordList = { 'easy': commonWords, 'medium': mediumWords, 'hard': hardWords }[difficulty] || commonWords;
+        async function generateWords() {
+            wordDisplay.style.opacity = '0';
+            await new Promise(resolve => setTimeout(resolve, 200));
+            
+            let wordList;
+            if (practiceMode === 'code') {
+                wordList = cppSnippets;
+            } else {
+                const wordLists = { 'easy': commonWords, 'medium': mediumWords, 'hard': hardWords };
+                wordList = wordLists[difficulty] || commonWords;
+            }
+
             words = Array.from({ length: 200 }, () => wordList[Math.floor(Math.random() * wordList.length)]);
             wordDisplay.innerHTML = words.map(word => `<span class="word">${word.split('').map(l => `<span class="letter">${l}</span>`).join('')}</span>`).join(' ');
+            wordDisplay.style.opacity = '1';
         }
 
         function resetTest(fromButton = false) {
-            clearInterval(timeInterval); clearTimeout(inactivityTimer);
+            clearInterval(timeInterval); clearTimeout(inactivityTimer); cancelAnimationFrame(wpmAnimationId);
             if (fromButton && resultsChart) resultsChart.destroy();
             
             gameState = 'waiting';
             time = gameDuration;
             timeDisplay.textContent = time; wpmDisplay.textContent = '0'; accuracyDisplay.textContent = '100%';
+            currentWpm = 0; targetWpm = 0;
             wordIndex = 0; letterIndex = 0;
-            correctChars = 0; incorrectChars = 0; totalChars = 0; rawChars = 0;
+            correctChars = 0; incorrectChars = 0; totalChars = 0, rawChars = 0;
             wpmHistory = [];
             
             document.querySelectorAll('#settings button').forEach(btn => btn.disabled = false);
 
             pauseOverlay.classList.add('hidden');
-            countdownOverlay.classList.add('hidden');
             resultsScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            mainTestContent.style.display = 'block';
             easterEgg.classList.add('hidden');
             wordsContainer.classList.remove('focused');
             
-            generateWords();
-            updateCaretPosition();
+            generateWords().then(() => {
+                 updateCaretPosition();
+            });
         }
         
-        function startCountdown() {
+        function startGame() {
             if (gameState !== 'waiting') return;
             initAudio();
-            gameState = 'countdown';
-            countdownOverlay.style.display = 'flex';
-            let count = 3;
-            countdownTimer.textContent = count;
-            countdownTimer.style.animation = 'countdown 1s ease-out';
-            const countdownInterval = setInterval(() => {
-                count--;
-                countdownTimer.textContent = count;
-                countdownTimer.style.animation = 'none';
-                void countdownTimer.offsetWidth;
-                countdownTimer.style.animation = 'countdown 1s ease-out';
-                if (count <= 0) {
-                    clearInterval(countdownInterval);
-                    countdownOverlay.style.display = 'none';
-                    startGame();
-                }
-            }, 1000);
-        }
-
-        function startGame() {
             gameState = 'typing';
             startTime = performance.now();
-            document.querySelectorAll('#difficulty-selector button, #time-selector button').forEach(btn => btn.disabled = true);
+            document.querySelectorAll('#settings button').forEach(btn => btn.disabled = true);
             wordsContainer.classList.add('focused');
             timeInterval = setInterval(updateTime, 1000);
             resetInactivityTimer();
+            animateWpm();
         }
         
         function pauseGame() {
             if (gameState !== 'typing') return;
-            clearInterval(timeInterval); clearTimeout(inactivityTimer);
+            clearInterval(timeInterval); clearTimeout(inactivityTimer); cancelAnimationFrame(wpmAnimationId);
             gameState = 'paused';
             pauseOverlay.style.display = 'flex';
         }
@@ -419,6 +420,7 @@
             pauseOverlay.style.display = 'none';
             timeInterval = setInterval(updateTime, 1000);
             resetInactivityTimer();
+            animateWpm();
         }
 
         function resetInactivityTimer() {
@@ -429,14 +431,17 @@
         function updateTime() {
             time--;
             timeDisplay.textContent = time;
+            
             const elapsedMinutes = (gameDuration - time) / 60;
             const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
-            wpmHistory.push(wpm);
+            const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
+            wpmHistory.push({wpm, accuracy});
+
             if (time <= 0) endGame();
         }
         
         function endGame() {
-            clearInterval(timeInterval); clearTimeout(inactivityTimer);
+            clearInterval(timeInterval); clearTimeout(inactivityTimer); cancelAnimationFrame(wpmAnimationId);
             gameState = 'finished';
             document.querySelectorAll('#settings button').forEach(btn => btn.disabled = false);
 
@@ -445,7 +450,10 @@
             const rawWpm = elapsedMinutes > 0 ? Math.round((rawChars / 5) / elapsedMinutes) : 0;
             const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
 
-            const highscoreKey = `highscore-${difficulty}-${gameDuration}`;
+            const highscoreKey = practiceMode === 'code'
+                ? `highscore-code-cpp-${gameDuration}`
+                : `highscore-words-${difficulty}-${gameDuration}`;
+
             const currentHighscore = localStorage.getItem(highscoreKey) || 0;
             let newHighscore = currentHighscore;
             if (wpm > currentHighscore) {
@@ -459,106 +467,123 @@
             resultsHighscore.textContent = newHighscore;
             resultsDetails.textContent = `Chars: ${totalChars} (Correct: ${correctChars} | Incorrect: ${incorrectChars})`
             
+            const wpmValues = wpmHistory.map(d => d.wpm);
+            const avgWpm = wpmValues.reduce((a, b) => a + b, 0) / wpmValues.length || 0;
+            const stdDev = Math.sqrt(wpmValues.map(x => Math.pow(x - avgWpm, 2)).reduce((a, b) => a + b, 0) / wpmValues.length) || 0;
+            const consistency = wpmValues.length > 1 ? Math.max(0, 100 - (stdDev / avgWpm) * 100) : 100;
+            resultsConsistency.textContent = `${consistency.toFixed(1)}%`;
+            
             if (wpm === 67) easterEgg.classList.remove('hidden');
             
+            mainContent.style.display = 'none';
+            mainTestContent.style.display = 'none';
             resultsScreen.style.display = 'flex';
             drawResultsGraph();
         }
 
         function handleKeyPress(e) {
-            if ((e.key.length > 1 && e.key !== 'Backspace') || e.altKey || e.ctrlKey || e.metaKey) return;
-            
-            if (gameState === 'finished' || gameState === 'countdown') return;
-            
-            if (gameState === 'paused') { 
-                resumeGame(); 
-                e.preventDefault(); 
-                return; 
-            }
-            if (gameState === 'waiting') { 
-                startCountdown(); 
-                e.preventDefault(); 
-                return; 
-            }
-            
-            resetInactivityTimer();
+            try {
+                if ((e.key.length > 1 && e.key !== 'Backspace') || e.altKey || e.ctrlKey || e.metaKey) return;
+                
+                if (gameState === 'finished') return;
+                if (gameState === 'paused') { resumeGame(); e.preventDefault(); return; }
+                if (gameState === 'waiting') { startGame(); }
+                
+                resetInactivityTimer();
 
-            const currentWordEl = wordDisplay.children[wordIndex];
-            if (!currentWordEl) return;
-            
-            const currentWordHasErrors = Array.from(currentWordEl.children).some(l => l.classList.contains('incorrect'));
+                const currentWordEl = wordDisplay.children[wordIndex];
+                
+                if (e.key === ' ') {
+                    if (!currentWordEl || letterIndex === 0) return;
 
-            if (e.key === ' ') {
-                if (letterIndex > 0 && !currentWordHasErrors) {
-                    if (letterIndex < currentWordEl.children.length) {
-                        incorrectChars += (currentWordEl.children.length - letterIndex);
-                        totalChars += (currentWordEl.children.length - letterIndex);
-                        for(let i = letterIndex; i < currentWordEl.children.length; i++) {
-                            currentWordEl.children[i].classList.add('incorrect');
+                    for (let i = letterIndex; i < currentWordEl.children.length; i++) {
+                        const letterEl = currentWordEl.children[i];
+                        if (!letterEl.classList.contains('incorrect') && !letterEl.classList.contains('correct')) {
+                            letterEl.classList.add('incorrect');
+                            incorrectChars++;
+                            totalChars++;
                         }
                     }
+                    
+                    const wordHadErrors = Array.from(currentWordEl.children).some(l => l.classList.contains('incorrect'));
+
                     totalChars++;
-                    correctChars++;
                     rawChars++;
+                    if (!wordHadErrors) {
+                        correctChars++;
+                    }
+                    
                     wordIndex++;
                     letterIndex = 0;
                     correctKeySound();
-                } else if (currentWordHasErrors) {
-                    errorKeySound();
-                }
-            } else if (e.key === 'Backspace') {
-                if (letterIndex > 0) {
-                    letterIndex--;
-                    const letterEl = currentWordEl.children[letterIndex];
-                    if (letterEl.classList.contains('incorrect')) incorrectChars--;
-                    else if (letterEl.classList.contains('correct')) correctChars--;
-                    totalChars--;
-                    rawChars = Math.max(0, rawChars - 1);
-                    letterEl.classList.remove('correct', 'incorrect');
-                } else if (wordIndex > 0) {
-                    const prevWordEl = wordDisplay.children[wordIndex - 1];
-                    const lastCharOfPrevWordWasIncorrect = Array.from(prevWordEl.children).some(l => l.classList.contains('incorrect'));
-                    
-                    if(!lastCharOfPrevWordWasIncorrect) {
-                        wordIndex--;
-                        const newCurrentWordEl = wordDisplay.children[wordIndex];
-                        letterIndex = newCurrentWordEl.children.length;
+
+                } else if (e.key === 'Backspace') {
+                    if (letterIndex > 0) {
+                        letterIndex--;
+                        const letterEl = currentWordEl.children[letterIndex];
+                        if (letterEl.classList.contains('incorrect')) incorrectChars--;
+                        if (letterEl.classList.contains('correct')) correctChars--;
                         totalChars--;
-                        correctChars--;
                         rawChars = Math.max(0, rawChars - 1);
+                        letterEl.classList.remove('correct', 'incorrect');
+                    } else if (wordIndex > 0) {
+                        wordIndex--;
+                        const prevWordEl = wordDisplay.children[wordIndex];
+                        letterIndex = prevWordEl.children.length;
+
+                        const wordHadErrors = Array.from(prevWordEl.children).some(l => l.classList.contains('incorrect'));
+
+                        totalChars--;
+                        rawChars = Math.max(0, rawChars - 1);
+                        if (!wordHadErrors) {
+                            correctChars--;
+                        }
+                    }
+                } else {
+                    if (!currentWordEl) return;
+                    const currentLetterEl = currentWordEl.children[letterIndex];
+                    if (currentLetterEl) {
+                        totalChars++; rawChars++;
+                        if (e.key === currentLetterEl.textContent) {
+                            currentLetterEl.classList.add('correct');
+                            correctKeySound();
+                            correctChars++;
+                        } else {
+                            currentLetterEl.classList.add('incorrect');
+                            errorKeySound();
+                            incorrectChars++;
+                        }
+                        letterIndex++;
                     }
                 }
-            } else {
-                const currentLetterEl = currentWordEl.children[letterIndex];
-                if (currentLetterEl) {
-                    totalChars++;
-                    rawChars++;
-                    if (e.key === currentLetterEl.textContent) {
-                        currentLetterEl.classList.add('correct');
-                        correctKeySound();
-                        correctChars++;
-                    } else {
-                        currentLetterEl.classList.add('incorrect');
-                        errorKeySound();
-                        incorrectChars++;
-                    }
-                    letterIndex++;
-                }
+                updateLiveStats();
+                updateCaretPosition();
+                e.preventDefault();
+            } catch (error) {
+                console.error("A critical error occurred during typing:", error);
             }
-            updateLiveStats();
-            updateCaretPosition();
-            e.preventDefault();
         }
 
         function updateLiveStats() {
             const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
             accuracyDisplay.textContent = `${accuracy}%`;
             const elapsedMs = performance.now() - startTime;
-            const elapsedMinutes = elapsedMs / 60000;
-            if (elapsedMinutes > 0) {
-                 const wpm = Math.round((correctChars / 5) / elapsedMinutes);
-                 wpmDisplay.textContent = wpm;
+            if (elapsedMs > 500) {
+                 const elapsedMinutes = elapsedMs / 60000;
+                 targetWpm = Math.round((correctChars / 5) / elapsedMinutes);
             }
+        }
+
+        function animateWpm() {
+            if (gameState !== 'typing' && gameState !== 'paused') return;
+            const diff = targetWpm - currentWpm;
+            if (Math.abs(diff) > 0.1) {
+                currentWpm += diff * 0.2;
+            } else {
+                currentWpm = targetWpm;
+            }
+            wpmDisplay.textContent = Math.round(currentWpm);
+            wpmAnimationId = requestAnimationFrame(animateWpm);
         }
         
         function updateCaretPosition() {
@@ -602,7 +627,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'WPM', data: wpmHistory,
+                        label: 'WPM', data: wpmHistory.map(d => d.wpm),
                         borderColor: themeStyles.getPropertyValue('--graph-line').trim(),
                         backgroundColor: themeStyles.getPropertyValue('--graph-fill').trim(),
                         fill: true, tension: 0.4, pointRadius: 2,
@@ -617,15 +642,25 @@
                     },
                     plugins: { 
                         legend: { display: false },
-                        tooltip: { enabled: true, mode: 'index', intersect: false,
+                        tooltip: { 
+                            enabled: true, mode: 'index', intersect: false,
                             backgroundColor: themeStyles.getPropertyValue('--card-bg').trim(),
-                            titleColor: themeStyles.getPropertyValue('--graph-line').trim(),
+                            titleColor: themeStyles.getPropertyValue('--highlight-text').trim(),
                             bodyColor: themeStyles.getPropertyValue('--primary-text').trim(),
                             borderColor: themeStyles.getPropertyValue('--button-border').trim(),
-                            borderWidth: 1, padding: 10,
+                            borderWidth: 1, padding: 10, displayColors: false,
                             callbacks: {
                                 title: (context) => `Second: ${context[0].label}`,
-                                label: (context) => `WPM: ${context.raw}`
+                                label: (context) => {
+                                    const dataPoint = wpmHistory[context.dataIndex];
+                                    if (!dataPoint) return '';
+                                    return `WPM: ${dataPoint.wpm}`;
+                                },
+                                afterLabel: (context) => {
+                                    const dataPoint = wpmHistory[context.dataIndex];
+                                     if (!dataPoint) return '';
+                                    return `Accuracy: ${dataPoint.accuracy}%`;
+                                }
                             }
                         }
                     }
