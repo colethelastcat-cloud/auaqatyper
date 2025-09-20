@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <!--
- ___ __ __   ________   ______   ______        _______   __  __     ________   __  __   ________   ______    ________       
-/__//_//_/\ /_______/\ /_____/\ /_____/\     /_______/\ /_/\/_/\   /_______/\ /_/\/_/\ /_______/\ /_____/\  /_______/\      
-\::\| \| \ \\::: _  \ \\:::_ \ \\::::_\/_    \::: _  \ \\ \ \ \ \  \::: _  \ \\:\ \:\ \\::: _  \ \\:::_ \ \ \::: _  \ \     
- \:.      \ \\::(_)  \ \\:\ \ \ \\:\/___/\    \::(_)  \/_\:\_\ \ \  \::(_)  \ \\:\ \:\ \\::(_)  \ \\:\ \ \ \_\::(_)  \ \    
-  \:.\-/\  \ \\:: __  \ \\:\ \ \ \\::___\/_    \::  _  \ \\::::_\/   \:: __  \ \\:\ \:\ \\:: __  \ \\:\ \ /_ \\:: __  \ \   
-   \. \  \  \ \\:.\ \  \ \\:\/.:| |\:\____/\    \::(_)  \ \ \::\ \    \:.\ \  \ \\:\_\:\ \\:.\ \  \ \\:\_-  \ \\:.\ \  \ \  
-    \__\/ \__\/ \__\/\__\/ \____/_/ \_____\/     \_______\/  \__\/     \__\/\__\/ \_____\/ \__\/\__\/ \___|\_\_/\__\/\__\/  
-                                                                                                                            
+ _____ ______   ________  ________  _______           ________      ___    ___      ________  ___  ___  ________  ________  ________         
+|\   _ \  _   \|\   __  \|\   ___ \|\  ___ \         |\   __  \    |\  \  /  /|    |\   __  \|\  \|\  \|\   __  \|\   __  \|\   __  \        
+\ \  \\\__\ \  \ \  \|\  \ \  \_|\ \ \   __/|        \ \  \|\ /_   \ \  \/  / /    \ \  \|\  \ \  \\\  \ \  \|\  \ \  \|\  \ \  \|\  \       
+ \ \  \\|__| \  \ \   __  \ \  \ \\ \ \  \_|/__       \ \   __  \   \ \    / /      \ \   __  \ \  \\\  \ \   __  \ \  \\\  \ \   __  \      
+  \ \  \    \ \  \ \  \ \  \ \  \_\\ \ \  \_|\ \       \ \  \|\  \   \/  /  /        \ \  \ \  \ \  \\\  \ \  \ \  \ \  \\\  \ \  \ \  \     
+   \ \__\    \ \__\ \__\ \__\ \_______\ \_______\       \ \_______\__/  / /           \ \__\ \__\ \_______\ \__\ \__\ \_____  \ \__\ \__\    
+    \|__|     \|__|\|__|\|__|\|_______|\|_______|        \|_______|\___/ /             \|__|\|__|\|_______|\|__|\|__|\|___| \__\|__|\|__|    
+                                                                  \|___|/                                                  \|__|             
+                                                                                                   
 -->
 <html lang="en">
 <head>
@@ -174,7 +175,7 @@
 
     <div class="aqua-card w-full max-w-6xl p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg relative">
         <button id="open-settings-btn" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311a1.464 1.464 0 0 1-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c-1.4-.413-1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311a1.464 1.464 0 0 1-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283-.698-2.686-.705-1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872 2.105l.34-.1c-1.4-.413-1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/></svg>
         </button>
 
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 tracking-wider" style="color: var(--highlight-text); text-shadow: 0 0 10px var(--caret-color);">Auaqa Typer</h1>
@@ -279,21 +280,21 @@
         let isZenMode = false;
 
         let audioReady = false;
-        const errorSynth = new Tone.MembraneSynth().toDestination();
-        let correctSoundPlayer;
+        let errorSynth, correctSoundPlayer;
 
         document.addEventListener('keydown', handleKeyPress);
         restartButton.addEventListener('click', () => resetTest(true));
         settings.addEventListener('click', handleSettingsChange);
         wordsContainer.addEventListener('click', () => { if (gameState === 'waiting') startCountdown(); });
         zenModeBtn.addEventListener('click', () => toggleZenMode());
-        openSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
+        openSettingsBtn.addEventListener('click', () => { initAudio(); settingsModal.classList.remove('hidden'); });
         closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
         themeSelector.addEventListener('click', handleThemeChange);
 
         function initAudio() {
             if (audioReady) return;
             Tone.start().then(() => {
+                errorSynth = new Tone.MembraneSynth().toDestination();
                 correctSoundPlayer = new Tone.Player("https://tonejs.github.io/audio/berklee/harpsichord_A3.mp3").toDestination();
                 audioReady = true;
             });
@@ -304,6 +305,7 @@
         
         function handleThemeChange(e) {
             if (e.target.tagName !== 'BUTTON') return;
+            initAudio();
             const theme = e.target.dataset.theme;
             applyTheme(theme);
             localStorage.setItem('theme', theme);
@@ -314,33 +316,31 @@
         function applyTheme(theme) {
             document.body.className = document.body.className.replace(/theme-\w+/g, '');
             document.body.classList.add(`theme-${theme}`);
-            if (resultsChart) {
-                drawResultsGraph();
-            }
+            if (resultsChart) drawResultsGraph();
         }
 
         function handleSettingsChange(e) {
-            if (e.target.tagName !== 'BUTTON' || (gameState === 'typing' || gameState === 'paused')) {
-                 if(e.target.id === 'zen-mode-btn' || e.target.parentElement.id === 'zen-mode-btn') return;
-            }
-            if (gameState !== 'waiting' && gameState !== 'finished') return;
+            if (e.target.tagName !== 'BUTTON') return;
+            if ((gameState === 'typing' || gameState === 'paused') && !e.target.closest('#mode-selector')) return;
+            
+            initAudio();
 
-            const parentId = e.target.parentElement.id;
+            const parentId = e.target.closest('div').id;
             
             if (parentId === 'difficulty-selector') {
-                document.querySelectorAll('#difficulty-selector button').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
                 difficulty = e.target.dataset.difficulty;
+                document.querySelectorAll('#difficulty-selector button').forEach(btn => btn.classList.toggle('active', btn === e.target));
+                resetTest();
             } else if (parentId === 'time-selector') {
-                document.querySelectorAll('#time-selector button').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
                 gameDuration = parseInt(e.target.dataset.time, 10);
+                document.querySelectorAll('#time-selector button').forEach(btn => btn.classList.toggle('active', btn === e.target));
+                resetTest();
             }
-            resetTest();
         }
 
-        function toggleZenMode(forceState) {
-            isZenMode = typeof forceState === 'boolean' ? forceState : !isZenMode;
+        function toggleZenMode() {
+            initAudio();
+            isZenMode = !isZenMode;
             document.body.classList.toggle('zen-mode-active', isZenMode);
             zenModeBtn.classList.toggle('active', isZenMode);
         }
@@ -376,6 +376,7 @@
         
         function startCountdown() {
             if (gameState !== 'waiting') return;
+            initAudio();
             gameState = 'countdown';
             countdownOverlay.style.display = 'flex';
             let count = 3;
@@ -387,7 +388,7 @@
                 countdownTimer.style.animation = 'none';
                 void countdownTimer.offsetWidth;
                 countdownTimer.style.animation = 'countdown 1s ease-out';
-                if (count === 0) {
+                if (count <= 0) {
                     clearInterval(countdownInterval);
                     countdownOverlay.style.display = 'none';
                     startGame();
@@ -396,12 +397,9 @@
         }
 
         function startGame() {
-            initAudio();
             gameState = 'typing';
             startTime = performance.now();
-            document.querySelectorAll('#settings button:not(#zen-mode-btn), #settings button svg, #settings button span').forEach(el => {
-                if (!el.closest('#zen-mode-btn')) el.disabled = true;
-            });
+            document.querySelectorAll('#difficulty-selector button, #time-selector button').forEach(btn => btn.disabled = true);
             wordsContainer.classList.add('focused');
             timeInterval = setInterval(updateTime, 1000);
             resetInactivityTimer();
@@ -468,51 +466,87 @@
         }
 
         function handleKeyPress(e) {
-            if (e.key.length > 1 && e.key !== 'Backspace') return;
+            if ((e.key.length > 1 && e.key !== 'Backspace') || e.altKey || e.ctrlKey || e.metaKey) return;
+            
             if (gameState === 'finished' || gameState === 'countdown') return;
-            if (gameState === 'paused') { resumeGame(); return; }
-            if (gameState === 'waiting') { startCountdown(); return; }
+            
+            if (gameState === 'paused') { 
+                resumeGame(); 
+                e.preventDefault(); 
+                return; 
+            }
+            if (gameState === 'waiting') { 
+                startCountdown(); 
+                e.preventDefault(); 
+                return; 
+            }
             
             resetInactivityTimer();
 
             const currentWordEl = wordDisplay.children[wordIndex];
             if (!currentWordEl) return;
+            
+            const currentWordHasErrors = Array.from(currentWordEl.children).some(l => l.classList.contains('incorrect'));
 
-            if (e.key === 'Backspace') {
+            if (e.key === ' ') {
+                if (letterIndex > 0 && !currentWordHasErrors) {
+                    if (letterIndex < currentWordEl.children.length) {
+                        incorrectChars += (currentWordEl.children.length - letterIndex);
+                        totalChars += (currentWordEl.children.length - letterIndex);
+                        for(let i = letterIndex; i < currentWordEl.children.length; i++) {
+                            currentWordEl.children[i].classList.add('incorrect');
+                        }
+                    }
+                    totalChars++;
+                    correctChars++;
+                    rawChars++;
+                    wordIndex++;
+                    letterIndex = 0;
+                    correctKeySound();
+                } else if (currentWordHasErrors) {
+                    errorKeySound();
+                }
+            } else if (e.key === 'Backspace') {
                 if (letterIndex > 0) {
                     letterIndex--;
                     const letterEl = currentWordEl.children[letterIndex];
                     if (letterEl.classList.contains('incorrect')) incorrectChars--;
                     else if (letterEl.classList.contains('correct')) correctChars--;
-                    totalChars--; rawChars--;
+                    totalChars--;
+                    rawChars = Math.max(0, rawChars - 1);
                     letterEl.classList.remove('correct', 'incorrect');
                 } else if (wordIndex > 0) {
-                    wordIndex--;
-                    const prevWordEl = wordDisplay.children[wordIndex];
-                    letterIndex = prevWordEl.children.length;
-                    totalChars--; correctChars--; rawChars--;
-                }
-            } else if (e.key === ' ') {
-                if (letterIndex > 0 && letterIndex === currentWordEl.children.length) {
-                    totalChars++; correctChars++; rawChars++;
-                    wordIndex++; letterIndex = 0;
-                    correctKeySound();
+                    const prevWordEl = wordDisplay.children[wordIndex - 1];
+                    const lastCharOfPrevWordWasIncorrect = Array.from(prevWordEl.children).some(l => l.classList.contains('incorrect'));
+                    
+                    if(!lastCharOfPrevWordWasIncorrect) {
+                        wordIndex--;
+                        const newCurrentWordEl = wordDisplay.children[wordIndex];
+                        letterIndex = newCurrentWordEl.children.length;
+                        totalChars--;
+                        correctChars--;
+                        rawChars = Math.max(0, rawChars - 1);
+                    }
                 }
             } else {
                 const currentLetterEl = currentWordEl.children[letterIndex];
                 if (currentLetterEl) {
-                    totalChars++; rawChars++;
+                    totalChars++;
+                    rawChars++;
                     if (e.key === currentLetterEl.textContent) {
                         currentLetterEl.classList.add('correct');
-                        correctKeySound(); correctChars++;
+                        correctKeySound();
+                        correctChars++;
                     } else {
                         currentLetterEl.classList.add('incorrect');
-                        errorKeySound(); incorrectChars++;
+                        errorKeySound();
+                        incorrectChars++;
                     }
                     letterIndex++;
                 }
             }
-            updateLiveStats(); updateCaretPosition();
+            updateLiveStats();
+            updateCaretPosition();
             e.preventDefault();
         }
 
@@ -521,28 +555,37 @@
             accuracyDisplay.textContent = `${accuracy}%`;
             const elapsedMs = performance.now() - startTime;
             const elapsedMinutes = elapsedMs / 60000;
-            const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
-            wpmDisplay.textContent = wpm;
+            if (elapsedMinutes > 0) {
+                 const wpm = Math.round((correctChars / 5) / elapsedMinutes);
+                 wpmDisplay.textContent = wpm;
+            }
         }
         
         function updateCaretPosition() {
             const currentWordEl = wordDisplay.children[wordIndex];
-            if (!currentWordEl) return;
-            const currentLetterEl = currentWordEl.children[letterIndex];
+            if (!currentWordEl) {
+                if(wordIndex > 0) {
+                    const prevWord = wordDisplay.children[wordIndex - 1];
+                    caret.style.left = `${prevWord.offsetLeft + prevWord.offsetWidth}px`;
+                }
+                return;
+            };
+
             const letterHeight = currentWordEl.offsetHeight * 0.9;
             caret.style.height = `${letterHeight}px`;
+            const yPos = currentWordEl.offsetTop + (currentWordEl.offsetHeight - letterHeight) / 2;
+            caret.style.top = `${yPos}px`;
+            
+            const currentLetterEl = currentWordEl.children[letterIndex];
 
             if (currentLetterEl) {
-                caret.style.top = `${currentLetterEl.offsetTop + (currentWordEl.offsetHeight - letterHeight) / 2}px`;
                 caret.style.left = `${currentLetterEl.offsetLeft}px`;
             } else {
                 const lastLetter = currentWordEl.children[currentWordEl.children.length - 1];
                 if (lastLetter) {
-                    caret.style.top = `${lastLetter.offsetTop + (currentWordEl.offsetHeight - letterHeight) / 2}px`;
                     caret.style.left = `${lastLetter.offsetLeft + lastLetter.offsetWidth}px`;
                 } else {
-                    caret.style.top = `${currentWordEl.offsetTop + (currentWordEl.offsetHeight - letterHeight) / 2}px`;
-                    caret.style.left = `${currentWordEl.offsetLeft}px`;
+                     caret.style.left = `${currentWordEl.offsetLeft}px`;
                 }
             }
             if (currentWordEl.offsetTop > wordsContainer.scrollTop + wordsContainer.clientHeight / 1.5) {
@@ -630,8 +673,4 @@
     </script>
 </body>
 </html>
-
-
-
-
 
