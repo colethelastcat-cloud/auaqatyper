@@ -250,7 +250,7 @@
         const mainTitle = document.getElementById('main-title');
         const wordOptions = document.getElementById('word-options');
 
-        const commonWords=['the','be','to','of','and','a','in','that','have','i','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us'];
+        const commonWords=['the','be','to','of','and','a','in','that','have','I','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us'];
         const mediumWords=['ability','about','above','accept','according','account','across','action','activity','actually','address','admin','admit','adult','affect','after','again','against','agency','agent','agree','ahead','allow','almost','alone','along','already','also','although','always','amazing','among','amount','analysis','animal','another','answer','anyone','anything','appear','apply','approach','area','argue','around','arrive','article','artist','assume','attack','attend','author','available','avoid','away','baby','back','balance','ball'];
         const hardWords=['interface,','protocol.','algorithm,','network.','database,','javascript.','python,','firewall.','encryption,','cybernetics.','nanotechnology,','bandwidth.','framework,','compiler.','debugger,','kernel.','malware,','phishing.','server,','client.','binary,','hexadecimal.','virtualization,','cloud.','container,','kubernetes.','agile,','scrum.','waterfall,','backend.','frontend,','fullstack,','devops.','repository,','github,','gitlab,','bitbucket.','lambda,','function.','variable,','constant.','object,','class.','inheritance,','polymorphism.','encapsulation,'];
         const punctuationWords = commonWords.map((word, i) => {
@@ -397,7 +397,7 @@
                 return;
             }
             
-            if (gameState !== 'waiting' && e.target.id !== 'toggle-mode-btn') {
+            if (gameState === 'typing' || gameState === 'paused') {
                  e.target.blur(); return;
             }
 
