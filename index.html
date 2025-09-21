@@ -81,6 +81,9 @@
             30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
+        input[type="color"] { -webkit-appearance: none; -moz-appearance: none; appearance: none; width: 100%; height: 40px; background-color: transparent; border: none; cursor: pointer; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 1px solid var(--button-border); border-radius: 0.5rem; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-2 sm:p-4 transition-all duration-300">
@@ -94,23 +97,34 @@
             <h2 class="text-2xl font-bold text-center mb-6" style="color: var(--highlight-text);">Settings</h2>
             <div class="space-y-6">
                 <div>
-                    <h3 class="font-semibold mb-2" style="color: var(--dim-text);">Theme</h3>
-                    <div id="theme-selector" class="flex flex-wrap gap-2">
-                        <button class="btn-aqua flex-1 py-2 rounded-md text-sm active" data-theme="aqua">Aqua</button>
-                        <button class="btn-aqua flex-1 py-2 rounded-md text-sm" data-theme="dusk">Dusk</button>
-                        <button class="btn-aqua flex-1 py-2 rounded-md text-sm" data-theme="crimson">Crimson</button>
+                    <h3 class="font-semibold mb-3" style="color: var(--dim-text);">Theme</h3>
+                    <div id="theme-selector" class="grid grid-cols-4 gap-2">
+                        <button class="btn-aqua py-2 rounded-md text-sm active" data-theme="aqua">Aqua</button>
+                        <button class="btn-aqua py-2 rounded-md text-sm" data-theme="dusk">Dusk</button>
+                        <button class="btn-aqua py-2 rounded-md text-sm" data-theme="crimson">Crimson</button>
+                        <button class="btn-aqua py-2 rounded-md text-sm" data-theme="custom">Custom</button>
                     </div>
+                </div>
+                <div id="custom-theme-settings" class="hidden space-y-2 pt-4 border-t" style="border-color: var(--card-border);">
+                     <h3 class="font-semibold mb-2 text-center" style="color: var(--dim-text);">Custom Theme</h3>
+                     <div class="grid grid-cols-2 gap-x-4 gap-y-2 items-center">
+                        <label class="text-sm">Background Start</label><input type="color" data-var="--bg-gradient-start">
+                        <label class="text-sm">Background End</label><input type="color" data-var="--bg-gradient-end">
+                        <label class="text-sm">Primary Text</label><input type="color" data-var="--primary-text">
+                        <label class="text-sm">Caret / Highlight</label><input type="color" data-var="--caret-color">
+                        <label class="text-sm">Error Text</label><input type="color" data-var="--error-text">
+                     </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="aqua-card w-full max-w-6xl p-4 sm:p-6 lg:p-8 rounded-2xl shadow-lg relative flex flex-col">
-        <header class="flex justify-between items-center w-full mb-4">
+        <header id="main-header" class="flex justify-between items-center w-full mb-4">
             <div class="flex-1 flex justify-start">
                  <button id="toggle-mode-btn" class="btn-aqua px-3 py-1 rounded-md text-sm">Code Mode</button>
             </div>
-             <h1 class="flex-shrink-0 text-3xl sm:text-4xl lg:text-5xl font-bold text-center tracking-wider px-4" style="color: var(--highlight-text); text-shadow: 0 0 10px var(--caret-color);">Auaqa Typer</h1>
+             <h1 id="main-title" class="flex-shrink-0 text-3xl sm:text-4xl lg:text-5xl font-bold text-center tracking-wider px-4" style="color: var(--highlight-text); text-shadow: 0 0 10px var(--caret-color);">Auaqa Typer</h1>
             <div class="flex-1 flex justify-end">
                 <button id="open-settings-btn" class="p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/10">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -122,6 +136,10 @@
 
         <div id="main-content">
             <div id="settings" class="flex flex-wrap justify-center items-center gap-x-4 gap-y-4 mb-6">
+                <div id="word-options" class="flex items-center space-x-2">
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-word-type="words">Words</button>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-word-type="punctuation">Punctuation</button>
+                </div>
                 <div id="difficulty-selector" class="flex items-center space-x-2">
                     <span class="text-sm font-medium" style="color: var(--dim-text);">Difficulty:</span>
                     <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-difficulty="easy">Easy</button>
@@ -226,11 +244,20 @@
         const toggleModeBtn = document.getElementById('toggle-mode-btn');
         const mainTestContent = document.getElementById('main-test-content');
         const mainContent = document.getElementById('main-content');
+        const mainHeader = document.getElementById('main-header');
         const instructionText = document.getElementById('instruction-text');
+        const customThemeSettings = document.getElementById('custom-theme-settings');
+        const mainTitle = document.getElementById('main-title');
+        const wordOptions = document.getElementById('word-options');
 
         const commonWords=['the','be','to','of','and','a','in','that','have','I','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us'];
         const mediumWords=['ability','about','above','accept','according','account','across','action','activity','actually','address','admin','admit','adult','affect','after','again','against','agency','agent','agree','ahead','allow','almost','alone','along','already','also','although','always','amazing','among','amount','analysis','animal','another','answer','anyone','anything','appear','apply','approach','area','argue','around','arrive','article','artist','assume','attack','attend','author','available','avoid','away','baby','back','balance','ball'];
         const hardWords=['interface,','protocol.','algorithm,','network.','database,','javascript.','python,','firewall.','encryption,','cybernetics.','nanotechnology,','bandwidth.','framework,','compiler.','debugger,','kernel.','malware,','phishing.','server,','client.','binary,','hexadecimal.','virtualization,','cloud.','container,','kubernetes.','agile,','scrum.','waterfall,','backend.','frontend,','fullstack,','devops.','repository,','github,','gitlab,','bitbucket.','lambda,','function.','variable,','constant.','object,','class.','inheritance,','polymorphism.','encapsulation,'];
+        const punctuationWords = commonWords.map((word, i) => {
+            if (i % 7 === 0 && i > 0) return word + ',';
+            if (i % 11 === 0 && i > 0) return word + '.';
+            return word;
+        });
         const cppSnippets = [
             '#include <iostream>',
             '#include <vector>',
@@ -263,6 +290,7 @@
         let practiceMode = 'words';
         let codeLanguage = 'cpp';
         let difficulty = 'easy';
+        let wordType = 'words';
         let wordIndex = 0, letterIndex = 0;
         let correctChars = 0, incorrectChars = 0, totalChars = 0, rawChars = 0;
         let wpmHistory = [];
@@ -274,13 +302,15 @@
         let wpmAnimationId;
 
         document.addEventListener('keydown', handleKeyPress);
-        restartButton.addEventListener('click', () => resetTest(true));
+        restartButton.addEventListener('click', () => resetTest());
         settings.addEventListener('click', handleSettingsChange);
         wordsContainer.addEventListener('click', () => { if (gameState === 'waiting') startGame(); });
         openSettingsBtn.addEventListener('click', () => { initAudio(); settingsModal.classList.remove('hidden'); });
         closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
         themeSelector.addEventListener('click', handleThemeChange);
         toggleModeBtn.addEventListener('click', togglePracticeMode);
+        customThemeSettings.addEventListener('input', livePreviewTheme);
+        wordOptions.addEventListener('click', handleSettingsChange);
 
         function initAudio() {
             if (audioReady) return;
@@ -290,13 +320,21 @@
                 audioReady = true;
             });
         }
-        const correctKeySound = () => { if (correctSoundPlayer?.loaded) correctSoundPlayer.start(); };
-        const errorKeySound = () => { if (audioReady) errorSynth.triggerAttackRelease("C1", "8n"); };
+        const correctKeySound = () => { if (correctSoundPlayer?.loaded) correctSoundPlayer.start(Tone.now()); };
+        const errorKeySound = () => { if (audioReady) errorSynth.triggerAttackRelease("C1", "8n", Tone.now()); };
         
         function handleThemeChange(e) {
             if (e.target.tagName !== 'BUTTON') return;
             initAudio();
             const theme = e.target.dataset.theme;
+            
+            if (theme === 'custom') {
+                customThemeSettings.classList.remove('hidden');
+                initializeColorPickers();
+            } else {
+                customThemeSettings.classList.add('hidden');
+            }
+            
             applyTheme(theme);
             localStorage.setItem('theme', theme);
             themeSelector.querySelector('.active').classList.remove('active');
@@ -305,8 +343,41 @@
 
         function applyTheme(theme) {
             document.body.className = document.body.className.replace(/theme-\w+/g, '');
-            document.body.classList.add(`theme-${theme}`);
+            if (theme === 'custom') {
+                loadCustomTheme();
+            } else {
+                document.documentElement.style = '';
+                document.body.classList.add(`theme-${theme}`);
+            }
             if (resultsChart) drawResultsGraph();
+        }
+
+        function livePreviewTheme(e) {
+            const cssVar = e.target.dataset.var;
+            document.documentElement.style.setProperty(cssVar, e.target.value);
+            saveCustomTheme();
+        }
+
+        function saveCustomTheme() {
+            const customColors = {};
+            customThemeSettings.querySelectorAll('input[type="color"]').forEach(input => {
+                customColors[input.dataset.var] = input.value;
+            });
+            localStorage.setItem('customTheme', JSON.stringify(customColors));
+        }
+
+        function loadCustomTheme() {
+            const customColors = JSON.parse(localStorage.getItem('customTheme') || '{}');
+            Object.entries(customColors).forEach(([key, value]) => {
+                document.documentElement.style.setProperty(key, value);
+            });
+        }
+
+        function initializeColorPickers() {
+            const currentStyles = getComputedStyle(document.documentElement);
+            customThemeSettings.querySelectorAll('input[type="color"]').forEach(input => {
+                input.value = currentStyles.getPropertyValue(input.dataset.var).trim();
+            });
         }
 
         function togglePracticeMode() {
@@ -326,9 +397,17 @@
                 return;
             }
             
-            if (gameState !== 'waiting') return;
+            if (gameState !== 'waiting' && e.target.id !== 'toggle-mode-btn') {
+                 e.target.blur(); return;
+            }
 
-            if (parent.id === 'difficulty-selector') {
+            if (parent.id === 'word-options') {
+                wordType = e.target.dataset.wordType;
+                parent.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                difficultySelector.classList.toggle('hidden', wordType === 'punctuation');
+                resetTest();
+            } else if (parent.id === 'difficulty-selector') {
                 difficulty = e.target.dataset.difficulty;
                 parent.querySelector('.active').classList.remove('active');
                 e.target.classList.add('active');
@@ -360,7 +439,10 @@
             let wordList;
             if (practiceMode === 'code') {
                 wordList = cppSnippets;
-            } else {
+            } else if (wordType === 'punctuation') {
+                wordList = punctuationWords;
+            }
+            else {
                 const wordLists = { 'easy': commonWords, 'medium': mediumWords, 'hard': hardWords };
                 wordList = wordLists[difficulty] || commonWords;
             }
@@ -372,7 +454,7 @@
             wordDisplay.style.opacity = '1';
         }
 
-        function resetTest(fromButton = false) {
+        function resetTest() {
             clearInterval(timeInterval); clearTimeout(inactivityTimer); cancelAnimationFrame(wpmAnimationId);
             if (resultsChart) {
                 resultsChart.destroy();
@@ -387,10 +469,9 @@
             correctChars = 0; incorrectChars = 0; totalChars = 0, rawChars = 0;
             wpmHistory = [];
             
-            document.querySelectorAll('#settings button, #toggle-mode-btn').forEach(btn => btn.disabled = false);
-
             pauseOverlay.classList.add('hidden');
             resultsScreen.style.display = 'none';
+            mainHeader.style.display = 'flex';
             mainContent.style.display = 'block';
             mainTestContent.style.display = 'block';
             easterEgg.classList.add('hidden');
@@ -398,7 +479,9 @@
             
             toggleModeBtn.textContent = practiceMode === 'words' ? 'Code Mode' : 'Word Mode';
             languageSelector.classList.toggle('hidden', practiceMode !== 'code');
-            difficultySelector.classList.toggle('hidden', practiceMode === 'code');
+            wordOptions.classList.toggle('hidden', practiceMode === 'code');
+            difficultySelector.classList.toggle('hidden', practiceMode === 'code' || wordType === 'punctuation');
+
             instructionText.textContent = practiceMode === 'code'
                 ? 'Press Enter to move to the next snippet.'
                 : 'Click the text box or start typing to begin.';
@@ -413,7 +496,6 @@
             initAudio();
             gameState = 'typing';
             startTime = performance.now();
-            document.querySelectorAll('#settings button, #toggle-mode-btn').forEach(btn => btn.disabled = true);
             wordsContainer.classList.add('focused');
             timeInterval = setInterval(updateTime, 1000);
             resetInactivityTimer();
@@ -457,17 +539,19 @@
         function endGame() {
             clearInterval(timeInterval); clearTimeout(inactivityTimer); cancelAnimationFrame(wpmAnimationId);
             gameState = 'finished';
-            document.querySelectorAll('#settings button, #toggle-mode-btn').forEach(btn => btn.disabled = false);
 
             const elapsedMinutes = gameDuration / 60;
             const wpm = elapsedMinutes > 0 ? Math.round((correctChars / 5) / elapsedMinutes) : 0;
             const rawWpm = elapsedMinutes > 0 ? Math.round((rawChars / 5) / elapsedMinutes) : 0;
             const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
 
-            const highscoreKey = practiceMode === 'code'
-                ? `highscore-code-cpp-${gameDuration}`
-                : `highscore-words-${difficulty}-${gameDuration}`;
-
+            let highscoreKey;
+            if (practiceMode === 'code') {
+                highscoreKey = `highscore-code-cpp-${gameDuration}`;
+            } else {
+                highscoreKey = `highscore-words-${wordType}-${difficulty}-${gameDuration}`;
+            }
+            
             const currentHighscore = localStorage.getItem(highscoreKey) || 0;
             let newHighscore = currentHighscore;
             if (wpm > currentHighscore) {
@@ -489,6 +573,7 @@
             
             if (wpm === 67) easterEgg.classList.remove('hidden');
             
+            mainHeader.style.display = 'none';
             mainContent.style.display = 'none';
             mainTestContent.style.display = 'none';
             resultsScreen.style.display = 'flex';
@@ -601,7 +686,7 @@
             if (!currentWordEl) {
                 if(wordIndex > 0) {
                     const prevWord = wordDisplay.children[wordIndex - 1];
-                    caret.style.left = `${prevWord.offsetLeft + prevWord.offsetWidth}px`;
+                    if (prevWord) caret.style.left = `${prevWord.offsetLeft + prevWord.offsetWidth}px`;
                 }
                 return;
             };
@@ -630,7 +715,7 @@
         
         function drawResultsGraph() {
             if (resultsChart) resultsChart.destroy();
-            const themeStyles = getComputedStyle(document.body);
+            const themeStyles = getComputedStyle(document.documentElement);
             const labels = Array.from({length: wpmHistory.length}, (_, i) => i + 1);
             resultsChart = new Chart(resultsChartCanvas, {
                 type: 'line',
@@ -710,7 +795,12 @@
         const savedTheme = localStorage.getItem('theme') || 'aqua';
         applyTheme(savedTheme);
         themeSelector.querySelector('.active').classList.remove('active');
-        themeSelector.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
+        const activeThemeBtn = themeSelector.querySelector(`[data-theme="${savedTheme}"]`);
+        if(activeThemeBtn) activeThemeBtn.classList.add('active');
+        if(savedTheme === 'custom') {
+            customThemeSettings.classList.remove('hidden');
+            initializeColorPickers();
+        }
 
         resetTest();
         resizeCanvas();
