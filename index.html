@@ -148,6 +148,7 @@
                 </div>
                 <div id="language-selector" class="hidden flex items-center space-x-2">
                     <span class="text-sm font-medium" style="color: var(--dim-text);">Language:</span>
+                    <button class="btn-aqua px-3 py-1 rounded-md text-sm" data-language="lua">Lua</button>
                     <button class="btn-aqua px-3 py-1 rounded-md text-sm active" data-language="cpp">C++</button>
                 </div>
                 <div id="time-selector" class="flex items-center space-x-2">
@@ -250,37 +251,27 @@
         const mainTitle = document.getElementById('main-title');
         const wordOptions = document.getElementById('word-options');
 
-        const commonWords=['the','be','to','of','and','a','in','that','have','I','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us'];
-        const mediumWords=['ability','about','above','accept','according','account','across','action','activity','actually','address','admin','admit','adult','affect','after','again','against','agency','agent','agree','ahead','allow','almost','alone','along','already','also','although','always','amazing','among','amount','analysis','animal','another','answer','anyone','anything','appear','apply','approach','area','argue','around','arrive','article','artist','assume','attack','attend','author','available','avoid','away','baby','back','balance','ball'];
-        const hardWords=['interface,','protocol.','algorithm,','network.','database,','javascript.','python,','firewall.','encryption,','cybernetics.','nanotechnology,','bandwidth.','framework,','compiler.','debugger,','kernel.','malware,','phishing.','server,','client.','binary,','hexadecimal.','virtualization,','cloud.','container,','kubernetes.','agile,','scrum.','waterfall,','backend.','frontend,','fullstack,','devops.','repository,','github,','gitlab,','bitbucket.','lambda,','function.','variable,','constant.','object,','class.','inheritance,','polymorphism.','encapsulation,'];
+        const commonWords=['the','be','to','of','and','a','in','that','have','I','it','for','not','on','with','he','as','you','do','at','this','but','his','by','from','they','we','say','her','she','or','an','will','my','one','all','would','there','their','what','so','up','out','if','about','who','get','which','go','me','when','make','can','like','time','no','just','him','know','take','people','into','year','your','good','some','could','them','see','other','than','then','now','look','only','come','its','over','think','also','back','after','use','two','how','our','work','first','well','way','even','new','want','because','any','these','give','day','most','us','find','long','down','day','did','get','come','made','may','part'];
+        const mediumWords=['ability','about','above','accept','according','account','across','action','activity','actually','address','admin','admit','adult','affect','after','again','against','agency','agent','agree','ahead','allow','almost','alone','along','already','also','although','always','amazing','among','amount','analysis','animal','another','answer','anyone','anything','appear','apply','approach','area','argue','around','arrive','article','artist','assume','attack','attend','author','available','avoid','away','baby','back','balance','ball','believe','benefit','better','beyond','business','candidate','capital','career','center','central','century','certain','challenge','chance','change','character','charge','check','child','choice','choose','church','citizen','civil','claim','clear','close','coach','collection','college','color','commercial','community','company','compare','computer','concern','condition','conference','congress','consider','consumer','contain','continue','control','cost','country','couple','course','court','cover','create','crime','cultural','culture','current','customer','death','debate','decade','decide','decision','deep','defense','degree','democrat','describe','design','despite','detail','determine','develop','different','difficult','direction','discover','discuss','disease','doctor','dream','drive','during','each','early','economic','economy','education','effect','effort','either','election','employee','energy','enjoy','enough','enter','entire','environment','especially','establish','evening','event','every','everyone','everything','evidence','exactly','example','executive','exist','expect','experience','expert','explain','family','father','federal','feeling','field','fight','figure','final','financial','find','finger','finish','fire','firm','first','fiscal','floor','focus','follow','food','force','foreign','forget','form','former','forward','friend','front','full','fund','future'];
+        const hardWords=['abnegation,','acquiesce.','anachronistic,','archetypal.','assiduous,','benevolent.','cacophony,','capitulate.','circumlocution,','cognizant.','conflagration,','corpulence.','defenestrate,','demagogue.','didactic,','disparate.','ebullient,','egregious.','eloquent,','enervate.','ephemeral,','equanimity.','exacerbate,','fastidious.','fecund,','gregarious.','hegemony.','idiosyncratic,','impetuous.','incongruous,','indefatigable.','insidious,','intrepid.','juxtaposition,','licentious.','malevolent,','maudlin.','mendacious,','multifarious.','myriad,','nascent.','nefarious,','obfuscate.','obsequious,','omniscient.','onerous,','ostensible.','palliate,','panacea.','paradigm,','paragon.','pejorative,','penchant.','penultimate,','pernicious.','perfunctory,','perspicacious.','pertinacious,','plethora.','pragmatic,','precocious.','predilection,','prescient.','proclivity,','prodigious.','pugnacious,','pulchritude.','pusillanimous,','querulous.','quixotic,','quotidian.','recalcitrant,','reciprocal.','recondite,','reprobate.','rhetoric,','salient.','sanctimonious,','sanguine.','solipsistic,','sycophant.','taciturn,','tenuous.','trenchant,','truculent.','ubiquitous,','unctuous.','utilitarian.','vacillate,','venerable.','veracity,','vicissitude.','vilify,','virtuoso.','vituperate,','vociferous.'];
         const punctuationWords = commonWords.map((word, i) => {
             if (i % 7 === 0 && i > 0) return word + ',';
             if (i % 11 === 0 && i > 0) return word + '.';
             return word;
         });
         const cppSnippets = [
-            '#include <iostream>',
-            '#include <vector>',
-            'using namespace std;',
-            'int main() {',
-            'cout << "Hello!" << endl;',
-            'int myNum = 15;',
-            'string greeting = "Hi";',
-            'for (int i = 0; i < 5; i++) {',
-            'if (x > y) {',
-            'vector<string> myVec;',
-            'myVec.push_back("Test");',
-            'while (i < 10) {',
-            '// This is a comment',
-            '/* Block comment */',
-            'return 0;',
-            'public:',
-            'private:',
-            'class MyClass {',
-            'int* ptr = nullptr;',
-            'delete ptr;',
-            '};',
-            '}'
+            '#include <iostream>', '#include <vector>', '#include <string>', 'using namespace std;',
+            'int main() {', 'cout << "Hello, World!" << endl;', 'int myNum = 15;', 'string greeting = "Hi";',
+            'for (int i = 0; i < 5; i++) {', 'if (x > y) {', 'vector<string> myVec;', 'myVec.push_back("Test");',
+            'while (i < 10) {', '// This is a comment', '/* Block comment */', 'return 0;',
+            'public:', 'private:', 'class MyClass {', 'int* ptr = nullptr;', 'delete ptr;', '};', '}'
+        ];
+        const luaSnippets = [
+            'local function greet(name)', 'print("Hello, " .. name)', 'end', 'greet("World")', 
+            'local myTable = {}', 'myTable.key = "value"', 'for i = 1, 10 do', 'if i % 2 == 0 then',
+            '-- this is a line comment', '--[[ Block comment here ]]', 'local x, y = 10, 20', 'x, y = y, x',
+            'local player = { x = 100, y = 200 }', 'function player:move(dx, dy)', 'self.x = self.x + dx', 'self.y = self.y + dy',
+            'local myString = "hello"', 'print(string.upper(myString))', 'pcall(myFunction)'
         ];
         let words = [];
 
@@ -374,10 +365,17 @@
         }
 
         function initializeColorPickers() {
-            const currentStyles = getComputedStyle(document.documentElement);
+            const defaultTheme = document.body.classList.contains('theme-crimson') ? 'crimson' : document.body.classList.contains('theme-dusk') ? 'dusk' : 'aqua';
+            const tempBody = document.createElement('body');
+            tempBody.classList.add(`theme-${defaultTheme}`);
+            document.body.appendChild(tempBody);
+            const currentStyles = getComputedStyle(tempBody);
+            
             customThemeSettings.querySelectorAll('input[type="color"]').forEach(input => {
                 input.value = currentStyles.getPropertyValue(input.dataset.var).trim();
             });
+            document.body.removeChild(tempBody);
+            loadCustomTheme();
         }
 
         function togglePracticeMode() {
@@ -438,7 +436,8 @@
             
             let wordList;
             if (practiceMode === 'code') {
-                wordList = cppSnippets;
+                const codeLists = { 'cpp': cppSnippets, 'lua': luaSnippets };
+                wordList = codeLists[codeLanguage] || cppSnippets;
             } else if (wordType === 'punctuation') {
                 wordList = punctuationWords;
             }
@@ -547,7 +546,7 @@
 
             let highscoreKey;
             if (practiceMode === 'code') {
-                highscoreKey = `highscore-code-cpp-${gameDuration}`;
+                highscoreKey = `highscore-code-${codeLanguage}-${gameDuration}`;
             } else {
                 highscoreKey = `highscore-words-${wordType}-${difficulty}-${gameDuration}`;
             }
